@@ -1,0 +1,1729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Register — KeanUHackThis 2027</title>
+<meta name="description" content="Register for KeanUHackThis 2027. Free 24-hour hackathon at Kean University, NJ. Open to all students." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* =====================================================================
+   TOKENS
+   ===================================================================== */
+:root {
+  --navy:      #04091c;
+  --navy-2:    #060d22;
+  --badge:     #3060c8;
+  --badge-lt:  #5c8de8;
+  --badge-dim: #1a3878;
+  --ice:       #e8f0ff;
+  --text:      #d0dcf0;
+  --dim:       #4a6aaa;
+  --muted:     #2c4880;
+  --very-muted:#1a2e5a;
+  --border:    #0c1e3e;
+  --card:      #070f24;
+  --success:   #3dba8c;
+  --error:     #e05c5c;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--navy); scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--badge); color: #fff; }
+
+/* =====================================================================
+   NAV
+   ===================================================================== */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  padding: 0 clamp(24px, 5vw, 80px);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(4,9,28,0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.nav-logo img {
+  width: 36px; height: 36px;
+  object-fit: contain;
+  clip-path: circle(47% at 50% 50%);
+}
+.nav-logo-text {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.06em; color: var(--ice);
+  white-space: nowrap;
+}
+.nav-back {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--dim);
+  display: flex; align-items: center; gap: 8px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--ice); }
+.nav-back svg { width: 14px; height: 14px; }
+
+/* =====================================================================
+   PAGE LAYOUT
+   ===================================================================== */
+.page-wrap {
+  padding-top: 64px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.reg-hero {
+  padding: clamp(48px,8vh,96px) clamp(24px,7vw,110px) clamp(32px,5vh,64px);
+  position: relative;
+  overflow: hidden;
+}
+.reg-hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 50%, rgba(48,96,200,0.24) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 85% 30%, rgba(48,96,200,0.10) 0%, transparent 55%);
+}
+.reg-hero-bg-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(92,141,232,0.09) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+}
+.reg-hero-inner {
+  position: relative; z-index: 2;
+  max-width: 680px;
+}
+.reg-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--badge-lt);
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px;
+}
+.reg-eyebrow::before {
+  content: ""; display: inline-block;
+  width: 24px; height: 1px; background: var(--badge-lt); flex-shrink: 0;
+}
+.reg-title {
+  font-size: clamp(36px, 6vw, 80px);
+  font-weight: 800; font-style: italic;
+  font-variation-settings: "wdth" 90, "opsz" 96;
+  letter-spacing: -0.04em; line-height: 0.9;
+  color: var(--ice);
+  margin-bottom: 20px;
+}
+.reg-sub {
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.6; color: var(--dim);
+  max-width: 52ch;
+}
+.reg-badges {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 20px;
+}
+.reg-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px;
+  background: rgba(48,96,200,0.10);
+  border: 1px solid rgba(48,96,200,0.20);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--badge-lt);
+}
+
+/* =====================================================================
+   FORM AREA
+   ===================================================================== */
+.reg-body {
+  flex: 1;
+  padding: 0 clamp(24px,7vw,110px) clamp(64px,10vh,100px);
+}
+.reg-form-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 780px;
+}
+
+/* Step indicator */
+.reg-steps {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+.reg-step {
+  flex: 1;
+  padding: 16px 20px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--very-muted);
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+  user-select: none;
+}
+.reg-step:last-child { border-right: none; }
+.reg-step.active { color: var(--badge-lt); background: rgba(48,96,200,0.06); }
+.reg-step.done   { color: var(--success); }
+.reg-step-num {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+  border: 1px solid currentColor;
+  flex-shrink: 0;
+}
+.reg-step.done .reg-step-num {
+  background: var(--success); border-color: var(--success); color: #fff;
+}
+
+/* Form panels */
+.reg-panel {
+  display: none;
+  padding: clamp(28px, 4vw, 48px);
+  flex-direction: column; gap: 24px;
+}
+.reg-panel.active { display: flex; }
+
+/* Field groups */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.field-group {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.field-group.full { grid-column: 1 / -1; }
+label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+}
+label .req { color: var(--badge-lt); margin-left: 2px; }
+
+input, select, textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 14px; font-weight: 400;
+  color: var(--text);
+  width: 100%;
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input::placeholder, textarea::placeholder { color: var(--very-muted); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--badge-lt);
+  background: rgba(48,96,200,0.06);
+}
+input.error, select.error, textarea.error { border-color: var(--error); }
+.field-error {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.10em;
+  color: var(--error); display: none;
+}
+.field-error.show { display: block; }
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+select option { background: #060d22; color: var(--text); }
+
+textarea { resize: vertical; min-height: 90px; }
+
+/* Checkbox — global custom style */
+input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 18px; height: 18px; min-width: 18px;
+  padding: 0; border-radius: 4px;
+  background: transparent;
+  border: 2px solid var(--badge-dim);
+  cursor: pointer; position: relative;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+input[type="checkbox"]:checked {
+  background: var(--badge);
+  border-color: var(--badge);
+}
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 1px;
+  width: 6px; height: 10px;
+  border: 2px solid #fff;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+input[type="checkbox"]:focus { outline: 2px solid var(--badge-lt); outline-offset: 2px; }
+
+.checkbox-group {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.checkbox-group:has(input:checked) { border-color: var(--badge-dim); }
+.checkbox-label {
+  font-size: 13px; line-height: 1.55;
+  color: var(--dim);
+}
+.checkbox-label a { color: var(--badge-lt); }
+.checkbox-label a:hover { text-decoration: underline; }
+
+/* School autocomplete */
+.field-autocomplete { position: relative; }
+.autocomplete-list {
+  position: absolute; top: calc(100% + 2px); left: 0; right: 0;
+  background: #070f24;
+  border: 1px solid var(--badge-dim);
+  border-radius: 10px;
+  z-index: 300; display: none;
+  max-height: 216px; overflow-y: auto;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+}
+.autocomplete-list.open { display: block; }
+.autocomplete-item {
+  padding: 10px 14px;
+  font-size: 13px; color: var(--text);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.autocomplete-item:last-child { border-bottom: none; }
+.autocomplete-item:hover, .autocomplete-item.hi { background: var(--badge-dim); color: #fff; }
+.autocomplete-match { color: var(--badge-lt); font-weight: 700; }
+
+/* Team fields */
+.team-fields {
+  display: none; flex-direction: column; gap: 14px;
+  padding: 16px 18px;
+  background: rgba(48,96,200,0.05);
+  border: 1px solid rgba(48,96,200,0.2);
+  border-radius: 10px;
+}
+.team-fields.visible { display: flex; }
+.field-hint {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.06em;
+  color: var(--badge-lt); margin-top: 2px;
+}
+.team-mates { display: flex; flex-direction: column; gap: 8px; }
+
+/* Dietary checkboxes */
+.dietary-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.diet-check {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 12px;
+  background: var(--very-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px; cursor: pointer;
+  font-size: 13px; color: var(--text);
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+.diet-check:has(input:checked) {
+  border-color: var(--badge); background: rgba(48,96,200,0.12);
+}
+.diet-check input[type="checkbox"] { pointer-events: none; }
+.dietary-other-wrap { display: none; margin-top: 6px; }
+.dietary-other-wrap.visible { display: block; }
+
+/* Section heading inside panel */
+.panel-section-title {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.20em;
+  text-transform: uppercase; color: var(--muted);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Navigation buttons */
+.reg-nav {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  padding: clamp(20px, 3vw, 32px) clamp(28px, 4vw, 48px);
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+}
+.btn-back {
+  padding: 10px 22px;
+  background: transparent; color: var(--dim);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.10em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-back:hover { border-color: var(--badge-lt); color: var(--text); }
+.btn-next {
+  padding: 12px 28px;
+  background: var(--badge); color: #fff;
+  font-weight: 700; font-size: 14px;
+  letter-spacing: -0.01em;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-next:hover { transform: translateY(-1px); box-shadow: 0 0 28px rgba(48,96,200,0.5); }
+.btn-next:disabled {
+  opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;
+}
+.btn-submit {
+  padding: 13px 32px;
+  background: var(--success); color: #fff;
+  font-weight: 700; font-size: 14px;
+  letter-spacing: -0.01em;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-submit:hover { transform: translateY(-1px); box-shadow: 0 0 28px rgba(61,186,140,0.45); }
+.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.step-hint {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--very-muted);
+}
+
+/* =====================================================================
+   SUBMIT STATES
+   ===================================================================== */
+#submit-loading {
+  display: none;
+  flex-direction: column; align-items: center;
+  justify-content: center;
+  padding: clamp(48px,8vh,80px) clamp(28px,4vw,48px);
+  gap: 20px; text-align: center;
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 2px solid var(--border);
+  border-top-color: var(--badge-lt);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#submit-success {
+  display: none;
+  flex-direction: column; align-items: center;
+  justify-content: center;
+  padding: clamp(48px,8vh,80px) clamp(28px,4vw,48px);
+  gap: 20px; text-align: center;
+}
+.success-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(61,186,140,0.15);
+  border: 1px solid rgba(61,186,140,0.4);
+  display: flex; align-items: center; justify-content: center;
+}
+.success-icon svg { width: 24px; height: 24px; color: var(--success); }
+.success-title {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800; font-style: italic;
+  letter-spacing: -0.03em; color: var(--ice);
+}
+.success-sub {
+  font-size: 14px; line-height: 1.6; color: var(--dim);
+  max-width: 44ch;
+}
+.conf-code-box {
+  padding: 14px 28px;
+  background: rgba(48,96,200,0.10);
+  border: 1px solid rgba(48,96,200,0.25);
+  border-radius: 10px;
+  text-align: center;
+}
+.conf-code-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.20em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 6px;
+}
+.conf-code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700; letter-spacing: 0.12em;
+  color: var(--ice);
+}
+
+#submit-error {
+  display: none;
+  padding: 16px 20px;
+  background: rgba(224,92,92,0.08);
+  border: 1px solid rgba(224,92,92,0.25);
+  border-radius: 10px;
+  font-size: 13px; line-height: 1.5;
+  color: var(--error);
+  margin: 0 clamp(28px,4vw,48px) clamp(20px,3vw,32px);
+}
+
+/* =====================================================================
+   SIDEBAR INFO
+   ===================================================================== */
+.reg-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: clamp(24px, 3vw, 48px);
+  align-items: start;
+}
+.reg-sidebar {
+  display: flex; flex-direction: column; gap: 16px;
+  position: sticky; top: 80px;
+}
+.sidebar-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.sidebar-head {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.20em;
+  text-transform: uppercase; color: var(--muted);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; line-height: 1.5; color: var(--dim);
+}
+.sidebar-item-icon {
+  font-size: 16px; flex-shrink: 0; margin-top: 1px;
+}
+.sidebar-item strong { color: var(--text); display: block; font-size: 13px; font-weight: 600; }
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+.reg-footer {
+  padding: 24px clamp(24px,7vw,110px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.reg-footer-copy {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--very-muted);
+}
+.reg-footer a {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+  transition: color 0.2s;
+}
+.reg-footer a:hover { color: var(--badge-lt); }
+
+/* =====================================================================
+   RESPONSIVE
+   ===================================================================== */
+@media (max-width: 900px) {
+  .reg-layout { grid-template-columns: 1fr; }
+  .reg-sidebar { position: static; }
+  .field-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .reg-steps { overflow-x: auto; }
+  .reg-step-label { display: none; }
+  .reg-nav { flex-wrap: wrap; gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img src="uploads/hackathon_logo2026.png" alt="KeanUHackThis logo" />
+    <span class="nav-logo-text">KeanUHackThis</span>
+  </a>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M8 2L3 7l5 5M3 7h10"/>
+    </svg>
+    Back to site
+  </a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="reg-hero">
+    <div class="reg-hero-bg"></div>
+    <div class="reg-hero-bg-grid"></div>
+    <div class="reg-hero-inner">
+      <p class="reg-eyebrow">KeanUHackThis 2027 &mdash; Registration Open</p>
+      <h1 class="reg-title">Secure your<br>spot.</h1>
+      <p class="reg-sub">
+        Registration is free and takes under 3 minutes. You&rsquo;ll receive a confirmation
+        email with your unique participant ID immediately after submitting.
+      </p>
+      <div class="reg-badges">
+        <span class="reg-badge">Free to attend</span>
+        <span class="reg-badge">24 hours</span>
+        <span class="reg-badge">All majors welcome</span>
+        <span class="reg-badge">18+ students only</span>
+        <span class="reg-badge">Spring 2027</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="reg-body">
+    <div class="reg-layout">
+
+      <!-- FORM CARD -->
+      <div>
+        <form id="reg-form" novalidate>
+
+          <!-- Step indicator -->
+          <div class="reg-form-card">
+            <div class="reg-steps">
+              <div class="reg-step active" id="step-tab-1">
+                <div class="reg-step-num">1</div>
+                <span class="reg-step-label">You</span>
+              </div>
+              <div class="reg-step" id="step-tab-2">
+                <div class="reg-step-num">2</div>
+                <span class="reg-step-label">Academics</span>
+              </div>
+              <div class="reg-step" id="step-tab-3">
+                <div class="reg-step-num">3</div>
+                <span class="reg-step-label">Event</span>
+              </div>
+              <div class="reg-step" id="step-tab-4">
+                <div class="reg-step-num">4</div>
+                <span class="reg-step-label">Confirm</span>
+              </div>
+            </div>
+
+            <!-- ── STEP 1: Personal ── -->
+            <div class="reg-panel active" id="panel-1">
+              <p class="panel-section-title">Personal Information</p>
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="firstName">First Name <span class="req">*</span></label>
+                  <input type="text" id="firstName" name="firstName" placeholder="Jane" autocomplete="given-name" />
+                  <span class="field-error" id="err-firstName">Required</span>
+                </div>
+                <div class="field-group">
+                  <label for="lastName">Last Name <span class="req">*</span></label>
+                  <input type="text" id="lastName" name="lastName" placeholder="Smith" autocomplete="family-name" />
+                  <span class="field-error" id="err-lastName">Required</span>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="email">Email Address <span class="req">*</span></label>
+                  <input type="email" id="email" name="email" placeholder="jane@kean.edu" autocomplete="email" />
+                  <span class="field-error" id="err-email">Enter a valid email</span>
+                </div>
+                <div class="field-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" placeholder="(201) 555-0100" autocomplete="tel" />
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="regPassword">Create Password <span class="req">*</span></label>
+                  <div style="position:relative;">
+                    <input type="password" id="regPassword" name="regPassword" placeholder="Min. 8 characters" autocomplete="new-password" style="padding-right:44px;" />
+                    <button type="button" id="reg-pw-toggle" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--dim);padding:4px;display:flex;align-items:center;transition:color 0.2s;" aria-label="Show password">
+                      <svg id="reg-eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                  </div>
+                  <span class="field-error" id="err-regPassword">Required — min. 8 characters</span>
+                </div>
+                <div class="field-group">
+                  <label for="regPasswordConfirm">Confirm Password <span class="req">*</span></label>
+                  <input type="password" id="regPasswordConfirm" name="regPasswordConfirm" placeholder="Repeat password" autocomplete="new-password" />
+                  <span class="field-error" id="err-regPasswordConfirm">Passwords do not match</span>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="age">Age <span class="req">*</span></label>
+                  <select id="age" name="age">
+                    <option value="">Select age</option>
+                    <option>18</option><option>19</option><option>20</option>
+                    <option>21</option><option>22</option><option>23</option>
+                    <option>23+</option>
+                  </select>
+                  <span class="field-error" id="err-age">Required — must be 18+</span>
+                </div>
+                <div class="field-group">
+                  <label for="gender">Gender Identity</label>
+                  <select id="gender" name="gender">
+                    <option value="">Prefer not to say</option>
+                    <option>Male</option><option>Female</option>
+                    <option>Non-binary</option><option>Other</option>
+                    <option>Prefer not to say</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 2: Academic ── -->
+            <div class="reg-panel" id="panel-2">
+              <p class="panel-section-title">Academic Background</p>
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="school">School / University <span class="req">*</span></label>
+                  <div class="field-autocomplete">
+                    <input type="text" id="school" name="school" placeholder="Start typing your school…" autocomplete="off" />
+                    <div class="autocomplete-list" id="school-suggestions"></div>
+                  </div>
+                  <span class="field-error" id="err-school">Required</span>
+                </div>
+                <div class="field-group">
+                  <label for="major">Major / Field of Study <span class="req">*</span></label>
+                  <div class="field-autocomplete">
+                    <input type="text" id="major" name="major" placeholder="Start typing your major…" autocomplete="off" />
+                    <div class="autocomplete-list" id="major-suggestions"></div>
+                  </div>
+                  <span class="field-error" id="err-major">Required</span>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="year">Year of Study <span class="req">*</span></label>
+                  <select id="year" name="year">
+                    <option value="">Select year</option>
+                    <option>Freshman</option><option>Sophomore</option>
+                    <option>Junior</option><option>Senior</option>
+                    <option>Graduate Student</option><option>Other</option>
+                  </select>
+                  <span class="field-error" id="err-year">Required</span>
+                </div>
+                <div class="field-group">
+                  <label for="level">Experience Level <span class="req">*</span></label>
+                  <select id="level" name="level">
+                    <option value="">Select level</option>
+                    <option>Beginner — first hackathon</option>
+                    <option>Intermediate — been to a few</option>
+                    <option>Advanced — hackathon veteran</option>
+                  </select>
+                  <span class="field-error" id="err-level">Required</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 3: Event ── -->
+            <div class="reg-panel" id="panel-3">
+              <p class="panel-section-title">Event Preferences</p>
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="teamStatus">Team Status <span class="req">*</span></label>
+                  <select id="teamStatus" name="teamStatus">
+                    <option value="">Select status</option>
+                    <option>I have a team (1–4 people)</option>
+                    <option>Looking to join a team</option>
+                    <option>Going solo</option>
+                  </select>
+                  <span class="field-error" id="err-teamStatus">Required</span>
+                </div>
+                <div class="field-group">
+                  <label for="track">Preferred Track</label>
+                  <select id="track" name="track">
+                    <option value="">No preference</option>
+                    <option>AI &amp; Machine Learning</option>
+                    <option>Cybersecurity</option>
+                    <option>Web &amp; Mobile</option>
+                    <option>Social Impact</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Team fields — shown only when "I have a team" selected -->
+              <div class="team-fields" id="team-fields">
+                <p class="panel-section-title" style="margin:0;padding-bottom:10px;">Team Information</p>
+                <div class="field-group">
+                  <label for="teamName">Team Name <span class="req">*</span></label>
+                  <input type="text" id="teamName" name="teamName" placeholder="e.g. ByteStorm" autocomplete="off" />
+                  <span class="field-error" id="err-teamName">Required when you have a team</span>
+                  <span class="field-hint">⚠ Every teammate must enter this exact spelling when they register</span>
+                </div>
+                <div class="field-group">
+                  <label>Teammate Names <span style="color:var(--dim);font-size:9px;text-transform:none;letter-spacing:0">(other members besides yourself)</span></label>
+                  <div class="team-mates">
+                    <input type="text" id="teammate1" name="teammate1" placeholder="Teammate 1 — Full Name" />
+                    <input type="text" id="teammate2" name="teammate2" placeholder="Teammate 2 — Full Name (optional)" />
+                    <input type="text" id="teammate3" name="teammate3" placeholder="Teammate 3 — Full Name (optional)" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="tshirt">T-Shirt Size <span class="req">*</span></label>
+                  <select id="tshirt" name="tshirt">
+                    <option value="">Select size</option>
+                    <option>XS</option><option>S</option><option>M</option>
+                    <option>L</option><option>XL</option><option>XXL</option>
+                  </select>
+                  <span class="field-error" id="err-tshirt">Required</span>
+                </div>
+                <div class="field-group">
+                  <label>Dietary Restrictions / Allergies</label>
+                  <div class="dietary-grid">
+                    <label class="diet-check"><input type="checkbox" name="diet" value="None / No restrictions" id="diet-none" /> None</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Vegetarian" /> Vegetarian</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Vegan" /> Vegan</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Halal" /> Halal</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Kosher" /> Kosher</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Gluten-Free" /> Gluten-Free</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Nut Allergy" /> Nut Allergy</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Dairy-Free" /> Dairy-Free</label>
+                    <label class="diet-check"><input type="checkbox" name="diet" value="Shellfish Allergy" /> Shellfish Allergy</label>
+                    <label class="diet-check" id="diet-other-label"><input type="checkbox" name="diet" value="Other" id="diet-other-chk" /> Other</label>
+                  </div>
+                  <div class="dietary-other-wrap" id="dietary-other-wrap">
+                    <input type="text" id="dietary-other-text" placeholder="Please specify…" />
+                  </div>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="hearAbout">How did you hear about us?</label>
+                <select id="hearAbout" name="hearAbout">
+                  <option value="">Select one</option>
+                  <option>Professor / Course</option>
+                  <option>Friend / Teammate</option>
+                  <option>Instagram</option>
+                  <option>Discord / Slack</option>
+                  <option>Kean University website</option>
+                  <option>MLH / Hackathon aggregator</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="notes">Anything else we should know?</label>
+                <textarea id="notes" name="notes" placeholder="Accessibility needs, questions, etc."></textarea>
+              </div>
+            </div>
+
+            <!-- ── STEP 4: Confirm ── -->
+            <div class="reg-panel" id="panel-4">
+              <p class="panel-section-title">Review &amp; Submit</p>
+              <div id="review-summary" style="display:flex;flex-direction:column;gap:10px;"></div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="agree" name="agree" />
+                <label for="agree" class="checkbox-label">
+                  I confirm I am 18 or older, a current student, and agree to the
+                  <a href="index.html#faq">event rules</a> and
+                  <a href="mailto:acmkeanchapter@kean.edu">code of conduct</a>.
+                  I understand my information will be used solely for hackathon logistics.
+                </label>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="photoConsent" name="photoConsent" />
+                <label for="photoConsent" class="checkbox-label">
+                  I consent to being photographed/filmed during the event for
+                  KeanUHackThis promotional purposes.
+                </label>
+              </div>
+            </div>
+
+            <!-- Loading / Success states -->
+            <div id="submit-loading">
+              <div class="spinner"></div>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);">
+                Submitting registration&hellip;
+              </p>
+            </div>
+
+            <div id="submit-success">
+              <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <p class="success-title">You&rsquo;re in!</p>
+              <p class="success-sub">
+                Registration confirmed. A confirmation email is on its way.
+                Save your participant ID — you&rsquo;ll need it to check in.
+              </p>
+              <div class="conf-code-box">
+                <p class="conf-code-label">Your Participant ID</p>
+                <p class="conf-code" id="conf-code-display">KUH-XXXXXX</p>
+              </div>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+                <a id="go-dashboard-btn" href="dashboard.html" style="display:none;padding:12px 28px;background:var(--badge);color:#fff;font-weight:700;font-size:14px;border-radius:999px;align-items:center;gap:8px;">
+                  My Registration &rarr;
+                </a>
+                <a href="index.html" style="padding:12px 28px;background:transparent;color:var(--dim);border:1px solid var(--border);font-weight:600;font-size:14px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;">
+                  Back to home
+                </a>
+              </div>
+            </div>
+          </div><!-- /.reg-form-card -->
+
+          <!-- Error banner -->
+          <div id="submit-error">
+            Submission failed — please check your connection and try again. If the problem persists,
+            email <a href="mailto:acmkeanchapter@kean.edu" style="color:var(--error);text-decoration:underline;">acmkeanchapter@kean.edu</a>.
+          </div>
+
+          <!-- Navigation buttons -->
+          <div class="reg-nav" id="reg-nav">
+            <button type="button" class="btn-back" id="btn-back" style="visibility:hidden;">← Back</button>
+            <span class="step-hint" id="step-hint">Step 1 of 4</span>
+            <button type="button" class="btn-next" id="btn-next">Continue →</button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="reg-sidebar">
+        <div class="sidebar-card">
+          <p class="sidebar-head">Event Details</p>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">📅</span>
+            <div><strong>Date</strong>Spring 2027 (exact date TBD)</div>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">📍</span>
+            <div><strong>Location</strong>Kean University STEM Building, Union NJ</div>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">⏱</span>
+            <div><strong>Duration</strong>24 hours straight</div>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">💰</span>
+            <div><strong>Cost</strong>Completely free — meals &amp; snacks included</div>
+          </div>
+        </div>
+        <div class="sidebar-card">
+          <p class="sidebar-head">Who can register</p>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">🎓</span>
+            <div>Currently enrolled undergraduate or graduate students, 18 or older</div>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">🌐</span>
+            <div>Any major welcome — not just CS/Engineering</div>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">👤</span>
+            <div>Solo or teams up to 4 people. Team matching available</div>
+          </div>
+        </div>
+        <div class="sidebar-card">
+          <p class="sidebar-head">Questions?</p>
+          <div class="sidebar-item">
+            <span class="sidebar-item-icon">✉️</span>
+            <div>
+              <a href="mailto:acmkeanchapter@kean.edu" style="color:var(--badge-lt);">
+                acmkeanchapter@kean.edu
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="reg-footer">
+    <span class="reg-footer-copy">&copy; 2027 KeanUHackThis &middot; Kean University</span>
+    <div style="display:flex;gap:20px;">
+      <a href="index.html">Home</a>
+      <a href="mailto:acmkeanchapter@kean.edu">Contact</a>
+    </div>
+  </footer>
+
+</div><!-- /.page-wrap -->
+
+<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+(function () {
+"use strict";
+
+/* ─────────────────────────────────────────────
+   IMPORTANT: Replace this URL with your deployed
+   Google Apps Script Web App URL.
+   See google-apps-script.js in this folder.
+───────────────────────────────────────────── */
+var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwH2e8yhBEr7tzQxRLKwqfXlynE9L5s3C95reicdACEvloVqUMybMHG2DuainQmWrp7Fw/exec";
+
+/* ── State ── */
+var currentStep = 1;
+var totalSteps  = 4;
+
+/* ── DOM refs ── */
+var form       = document.getElementById("reg-form");
+var btnBack    = document.getElementById("btn-back");
+var btnNext    = document.getElementById("btn-next");
+var stepHint   = document.getElementById("step-hint");
+var regNav     = document.getElementById("reg-nav");
+
+/* ── Validation rules per step ── */
+var stepFields = {
+  1: [
+    { id: "firstName",          validate: function(v){ return v.trim().length > 0; }, msg: "Required" },
+    { id: "lastName",           validate: function(v){ return v.trim().length > 0; }, msg: "Required" },
+    { id: "email",              validate: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }, msg: "Enter a valid email" },
+    { id: "regPassword",        validate: function(v){ return v.length >= 8; }, msg: "Required — min. 8 characters" },
+    { id: "regPasswordConfirm", validate: function(v){ return v === document.getElementById("regPassword").value; }, msg: "Passwords do not match" },
+    { id: "age",                validate: function(v){ return v !== ""; }, msg: "Required — must be 18+" },
+  ],
+  2: [
+    { id: "school", validate: function(v){ return v.trim().length > 0; }, msg: "Required" },
+    { id: "major",  validate: function(v){ return v.trim().length > 0; }, msg: "Required" },
+    { id: "year",   validate: function(v){ return v !== ""; }, msg: "Required" },
+    { id: "level",  validate: function(v){ return v !== ""; }, msg: "Required" },
+  ],
+  3: [
+    { id: "teamStatus", validate: function(v){ return v !== ""; }, msg: "Required" },
+    {
+      id: "teamName",
+      validate: function(v){
+        var tf = document.getElementById("team-fields");
+        if (!tf || !tf.classList.contains("visible")) return true;
+        return v.trim().length > 0;
+      },
+      msg: "Required — all team members must use identical spelling"
+    },
+    { id: "tshirt", validate: function(v){ return v !== ""; }, msg: "Required" },
+  ],
+  4: [], /* validated inline before submit */
+};
+
+function validateStep(step) {
+  var fields = stepFields[step] || [];
+  var valid = true;
+  fields.forEach(function(f) {
+    var el  = document.getElementById(f.id);
+    var err = document.getElementById("err-" + f.id);
+    if (!f.validate(el.value)) {
+      el.classList.add("error");
+      if (err) { err.textContent = f.msg; err.classList.add("show"); }
+      valid = false;
+    } else {
+      el.classList.remove("error");
+      if (err) { err.classList.remove("show"); }
+    }
+  });
+  return valid;
+}
+
+/* Clear errors when user types */
+document.querySelectorAll("input, select, textarea").forEach(function(el) {
+  el.addEventListener("input", function() {
+    el.classList.remove("error");
+    var err = document.getElementById("err-" + el.id);
+    if (err) err.classList.remove("show");
+  });
+});
+
+/* ── Navigate steps ── */
+function goTo(step) {
+  /* hide all panels */
+  for (var i = 1; i <= totalSteps; i++) {
+    var panel = document.getElementById("panel-" + i);
+    if (panel) panel.classList.remove("active");
+    var tab = document.getElementById("step-tab-" + i);
+    if (tab) {
+      tab.classList.remove("active", "done");
+      if (i < step) tab.classList.add("done");
+      if (i === step) tab.classList.add("active");
+    }
+  }
+  var target = document.getElementById("panel-" + step);
+  if (target) target.classList.add("active");
+
+  if (step === totalSteps) buildReview();
+
+  currentStep = step;
+  stepHint.textContent = "Step " + step + " of " + totalSteps;
+  btnBack.style.visibility = step === 1 ? "hidden" : "visible";
+
+  if (step === totalSteps) {
+    btnNext.textContent = "";
+    btnNext.innerHTML = '<span style="display:none"></span>';
+    /* Swap to submit button */
+    btnNext.id = "btn-submit-action";
+    btnNext.className = "btn-submit";
+    btnNext.textContent = "Complete Registration →";
+    btnNext.removeEventListener("click", onNext);
+    btnNext.addEventListener("click", onSubmit);
+  } else {
+    if (btnNext.id === "btn-submit-action") {
+      btnNext.id = "btn-next";
+      btnNext.className = "btn-next";
+      btnNext.textContent = "Continue →";
+      btnNext.removeEventListener("click", onSubmit);
+      btnNext.addEventListener("click", onNext);
+    }
+    btnNext.textContent = step === totalSteps - 1 ? "Review →" : "Continue →";
+  }
+
+  gsap.fromTo("#panel-" + step,
+    { opacity: 0, y: 14 },
+    { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
+  );
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function onNext() {
+  if (validateStep(currentStep) && currentStep < totalSteps) {
+    goTo(currentStep + 1);
+  }
+}
+function onBack() {
+  if (currentStep > 1) goTo(currentStep - 1);
+}
+
+btnNext.addEventListener("click", onNext);
+btnBack.addEventListener("click", onBack);
+
+/* ══════════════════════════════════════════
+   SCHOOL AUTOCOMPLETE
+   ══════════════════════════════════════════ */
+var SCHOOLS = [
+  { n: "Kean University",                                    a: ["kean","ku","kean univ"] },
+  { n: "Rutgers University – New Brunswick",                 a: ["rutgers","rutgers nb","runb","rutgers new brunswick","ru"] },
+  { n: "Rutgers University – Newark",                        a: ["rutgers newark","run","rutgers-newark"] },
+  { n: "Rutgers University – Camden",                        a: ["rutgers camden","ruc"] },
+  { n: "New Jersey Institute of Technology",                 a: ["njit","new jersey institute","nj institute of technology"] },
+  { n: "Princeton University",                               a: ["princeton","pu"] },
+  { n: "Stevens Institute of Technology",                    a: ["stevens","sit","stevens tech"] },
+  { n: "Montclair State University",                         a: ["montclair","msu","montclair state"] },
+  { n: "Rowan University",                                   a: ["rowan","rowan univ"] },
+  { n: "The College of New Jersey",                          a: ["tcnj","college of new jersey","cnj"] },
+  { n: "Seton Hall University",                              a: ["seton hall","shu"] },
+  { n: "William Paterson University",                        a: ["william paterson","wpu","wpunj"] },
+  { n: "Fairleigh Dickinson University",                     a: ["fdu","fairleigh dickinson","fairleigh"] },
+  { n: "Drew University",                                    a: ["drew"] },
+  { n: "Rider University",                                   a: ["rider"] },
+  { n: "Stockton University",                                a: ["stockton","richard stockton"] },
+  { n: "Ramapo College of New Jersey",                       a: ["ramapo","rcnj","ramapo college"] },
+  { n: "New Jersey City University",                         a: ["njcu","nj city university","njcu"] },
+  { n: "Monmouth University",                                a: ["monmouth"] },
+  { n: "Georgian Court University",                          a: ["georgian court","gcu"] },
+  { n: "Felician University",                                a: ["felician"] },
+  { n: "Centenary University",                               a: ["centenary"] },
+  { n: "Bergen Community College",                           a: ["bergen","bcc","bergen cc"] },
+  { n: "Essex County College",                               a: ["essex","ecc","essex county"] },
+  { n: "Union County College",                               a: ["union county","ucc","union cc"] },
+  { n: "Middlesex College",                                  a: ["middlesex","middlesex county"] },
+  { n: "Ocean County College",                               a: ["ocean county","occ"] },
+  { n: "Thomas Edison State University",                     a: ["thomas edison","tesu","tesc"] },
+  { n: "New York University",                                a: ["nyu","new york university"] },
+  { n: "Columbia University",                                a: ["columbia","columbia univ","cu"] },
+  { n: "Cornell University",                                 a: ["cornell"] },
+  { n: "University of Pennsylvania",                         a: ["upenn","penn","u of penn","u penn"] },
+  { n: "Massachusetts Institute of Technology",              a: ["mit"] },
+  { n: "Carnegie Mellon University",                         a: ["cmu","carnegie mellon","carnegie-mellon"] },
+  { n: "Georgia Institute of Technology",                    a: ["georgia tech","gatech","gt"] },
+  { n: "University of Michigan",                             a: ["umich","u of michigan","university of michigan","um"] },
+  { n: "Stanford University",                                a: ["stanford"] },
+  { n: "Harvard University",                                 a: ["harvard"] },
+  { n: "Fordham University",                                 a: ["fordham"] },
+  { n: "St. Peter's University",                             a: ["st peters","st. peters","spu"] },
+  { n: "Caldwell University",                                a: ["caldwell"] },
+  { n: "Bloomfield College",                                 a: ["bloomfield"] },
+  { n: "Pillar College",                                     a: ["pillar"] },
+  { n: "New York Institute of Technology",                   a: ["nyit","ny institute of technology"] },
+  { n: "Pace University",                                    a: ["pace"] },
+  { n: "Hofstra University",                                 a: ["hofstra"] },
+  { n: "Adelphi University",                                 a: ["adelphi"] },
+  { n: "Stony Brook University",                             a: ["stony brook","sbu","suny stony brook"] },
+  { n: "University at Buffalo",                              a: ["ub","buffalo","suny buffalo","university at buffalo"] },
+  { n: "Baruch College – CUNY",                              a: ["baruch","cuny baruch"] },
+  { n: "City College of New York – CUNY",                    a: ["ccny","city college","cuny city"] },
+  { n: "Hunter College – CUNY",                              a: ["hunter","cuny hunter"] },
+  { n: "Other / Not Listed",                                 a: ["other","not listed","unlisted"] },
+];
+
+(function initSchoolAutocomplete() {
+  var input = document.getElementById("school");
+  var list  = document.getElementById("school-suggestions");
+  var hiIdx = -1;
+  var matches = [];
+
+  function normalize(s) {
+    return s.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function highlight(text, query) {
+    var idx = text.toLowerCase().indexOf(query.toLowerCase());
+    if (idx === -1) return text;
+    return text.slice(0, idx)
+      + '<span class="autocomplete-match">' + text.slice(idx, idx + query.length) + '</span>'
+      + text.slice(idx + query.length);
+  }
+
+  function search(q) {
+    if (!q || q.length < 1) return [];
+    var nq = normalize(q);
+    var results = [];
+    SCHOOLS.forEach(function(s) {
+      var score = 0;
+      var nn = normalize(s.n);
+      if (nn.startsWith(nq)) score = 100;
+      else if (nn.includes(nq)) score = 80;
+      else {
+        s.a.forEach(function(al) {
+          if (normalize(al) === nq) score = Math.max(score, 90);
+          else if (normalize(al).startsWith(nq)) score = Math.max(score, 70);
+          else if (normalize(al).includes(nq)) score = Math.max(score, 50);
+        });
+      }
+      if (score > 0) results.push({ s: s, score: score });
+    });
+    results.sort(function(a, b){ return b.score - a.score; });
+    return results.slice(0, 8).map(function(r){ return r.s; });
+  }
+
+  function render(q) {
+    matches = search(q);
+    hiIdx = -1;
+    if (!matches.length) { list.classList.remove("open"); return; }
+    list.innerHTML = matches.map(function(s, i) {
+      return '<div class="autocomplete-item" data-i="' + i + '">' + highlight(s.n, q) + '</div>';
+    }).join("");
+    list.classList.add("open");
+  }
+
+  function select(idx) {
+    if (matches[idx]) {
+      input.value = matches[idx].n;
+      input.classList.remove("error");
+      var e = document.getElementById("err-school");
+      if (e) e.classList.remove("show");
+    }
+    list.classList.remove("open");
+    matches = []; hiIdx = -1;
+  }
+
+  input.addEventListener("input", function() {
+    render(this.value);
+  });
+
+  input.addEventListener("keydown", function(e) {
+    var items = list.querySelectorAll(".autocomplete-item");
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      hiIdx = Math.min(hiIdx + 1, items.length - 1);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      hiIdx = Math.max(hiIdx - 1, 0);
+    } else if (e.key === "Enter" && hiIdx >= 0) {
+      e.preventDefault(); select(hiIdx); return;
+    } else if (e.key === "Escape") {
+      list.classList.remove("open"); return;
+    }
+    items.forEach(function(it, i) {
+      it.classList.toggle("hi", i === hiIdx);
+    });
+  });
+
+  list.addEventListener("mousedown", function(e) {
+    var item = e.target.closest(".autocomplete-item");
+    if (item) { e.preventDefault(); select(parseInt(item.dataset.i, 10)); }
+  });
+
+  document.addEventListener("click", function(e) {
+    if (!input.contains(e.target) && !list.contains(e.target)) {
+      list.classList.remove("open");
+    }
+  });
+})();
+
+/* ══════════════════════════════════════════
+   PHONE NUMBER FORMATTER  →  (XXX) XXX-XXXX
+   ══════════════════════════════════════════ */
+(function initPhone() {
+  var ph = document.getElementById("phone");
+  ph.addEventListener("input", function(e) {
+    var digits = ph.value.replace(/\D/g, "").slice(0, 10);
+    var out = "";
+    if (digits.length === 0) { ph.value = ""; return; }
+    if (digits.length <= 3) {
+      out = "(" + digits;
+    } else if (digits.length <= 6) {
+      out = "(" + digits.slice(0,3) + ") " + digits.slice(3);
+    } else {
+      out = "(" + digits.slice(0,3) + ") " + digits.slice(3,6) + "-" + digits.slice(6);
+    }
+    ph.value = out;
+  });
+  // Allow backspace to delete naturally by stripping formatting on keydown
+  ph.addEventListener("keydown", function(e) {
+    if (e.key === "Backspace") {
+      var digits = ph.value.replace(/\D/g, "");
+      if (digits.length > 0) digits = digits.slice(0, -1);
+      e.preventDefault();
+      var out = "";
+      if (digits.length === 0) { ph.value = ""; return; }
+      if (digits.length <= 3) out = "(" + digits;
+      else if (digits.length <= 6) out = "(" + digits.slice(0,3) + ") " + digits.slice(3);
+      else out = "(" + digits.slice(0,3) + ") " + digits.slice(3,6) + "-" + digits.slice(6);
+      ph.value = out;
+    }
+  });
+})();
+
+/* ══════════════════════════════════════════
+   MAJOR AUTOCOMPLETE
+   ══════════════════════════════════════════ */
+var MAJORS = [
+  // Computer & Tech
+  { n: "Computer Science",                        a: ["cs","compsci","comp sci","comp science"] },
+  { n: "Computer Engineering",                    a: ["ce","comp eng","cpe"] },
+  { n: "Software Engineering",                    a: ["swe","se","software eng"] },
+  { n: "Information Technology",                  a: ["it","info tech","infotech"] },
+  { n: "Information Systems",                     a: ["mis","info systems","management information systems"] },
+  { n: "Cybersecurity",                           a: ["cyber","infosec","info security","cyber security"] },
+  { n: "Data Science",                            a: ["ds","data sci","datascience"] },
+  { n: "Artificial Intelligence",                 a: ["ai","machine learning","ml","ai/ml"] },
+  { n: "Game Design & Development",               a: ["game design","game dev","game development"] },
+  { n: "Web Development",                         a: ["web dev","webdev","web design"] },
+  { n: "Computer Information Systems",            a: ["cis"] },
+  { n: "Network & Communications Technology",     a: ["networking","nct","networks"] },
+  // Engineering
+  { n: "Electrical Engineering",                  a: ["ee","elec eng","electrical"] },
+  { n: "Mechanical Engineering",                  a: ["me","mech eng","mechanical"] },
+  { n: "Civil Engineering",                       a: ["civil","cive"] },
+  { n: "Biomedical Engineering",                  a: ["bme","biomedical","biomed eng"] },
+  { n: "Chemical Engineering",                    a: ["che","chem eng","chemical"] },
+  { n: "Industrial Engineering",                  a: ["ie","industrial","industrial eng"] },
+  { n: "Environmental Engineering",               a: ["env eng","environmental"] },
+  // Business
+  { n: "Business Administration",                 a: ["business","biz","ba","business admin"] },
+  { n: "Finance",                                 a: ["fin","finance"] },
+  { n: "Marketing",                               a: ["mkt","marketing"] },
+  { n: "Accounting",                              a: ["acct","accounting"] },
+  { n: "Economics",                               a: ["econ","economics"] },
+  { n: "Entrepreneurship",                        a: ["entrepreneur","entrepreneurship"] },
+  { n: "Management",                              a: ["mgmt","management"] },
+  { n: "Supply Chain & Logistics",                a: ["supply chain","logistics","scm"] },
+  // Science
+  { n: "Biology",                                 a: ["bio","biol","biological sciences"] },
+  { n: "Chemistry",                               a: ["chem","chemistry"] },
+  { n: "Physics",                                 a: ["phys","physics"] },
+  { n: "Mathematics",                             a: ["math","maths","mathematics"] },
+  { n: "Statistics",                              a: ["stats","stat","statistics"] },
+  { n: "Environmental Science",                   a: ["env sci","enviro","envsci"] },
+  { n: "Neuroscience",                            a: ["neuro","neuroscience"] },
+  { n: "Biochemistry",                            a: ["biochem","biochemistry"] },
+  // Healthcare
+  { n: "Nursing",                                 a: ["rn","bsn","nursing"] },
+  { n: "Pre-Medicine",                            a: ["premed","pre med","pre-med","pre medicine"] },
+  { n: "Public Health",                           a: ["public health","ph"] },
+  { n: "Health Information Management",           a: ["him","health informatics","health info"] },
+  // Liberal Arts & Social Sciences
+  { n: "Psychology",                              a: ["psych","psyc","psychology"] },
+  { n: "Political Science",                       a: ["poli sci","polisci","political science","pols"] },
+  { n: "Sociology",                               a: ["soc","sociology"] },
+  { n: "Communications",                          a: ["comm","comms","communications"] },
+  { n: "Journalism",                              a: ["journalism","journ"] },
+  { n: "English",                                 a: ["english","english lit"] },
+  { n: "History",                                 a: ["hist","history"] },
+  { n: "Criminal Justice",                        a: ["cj","criminal justice","criminology"] },
+  { n: "Social Work",                             a: ["social work","sw"] },
+  // Arts & Design
+  { n: "Graphic Design",                          a: ["graphic design","gd","design"] },
+  { n: "Digital Media",                           a: ["digital media","dm","media"] },
+  { n: "Animation & Illustration",                a: ["animation","illustration","ani"] },
+  { n: "Architecture",                            a: ["arch","architecture"] },
+  { n: "Music Technology",                        a: ["music tech","music technology"] },
+  { n: "Fine Arts",                               a: ["art","fine arts","studio art"] },
+  // Education
+  { n: "Education",                               a: ["edu","education","teaching"] },
+  { n: "Special Education",                       a: ["spec ed","special ed","sped"] },
+  // Catch-all
+  { n: "Other / Undeclared",                      a: ["other","undeclared","undecided","tbd"] },
+];
+
+(function initMajorAutocomplete() {
+  var input = document.getElementById("major");
+  var list  = document.getElementById("major-suggestions");
+  var hiIdx = -1;
+  var matches = [];
+
+  function normalize(s) {
+    return s.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function highlight(text, q) {
+    var idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    return text.slice(0, idx)
+      + '<span class="autocomplete-match">' + text.slice(idx, idx + q.length) + '</span>'
+      + text.slice(idx + q.length);
+  }
+  function search(q) {
+    if (!q) return [];
+    var nq = normalize(q);
+    var results = [];
+    MAJORS.forEach(function(m) {
+      var score = 0;
+      var nn = normalize(m.n);
+      if (nn.startsWith(nq)) score = 100;
+      else if (nn.includes(nq)) score = 80;
+      else {
+        m.a.forEach(function(al) {
+          if (normalize(al) === nq) score = Math.max(score, 95);
+          else if (normalize(al).startsWith(nq)) score = Math.max(score, 75);
+          else if (normalize(al).includes(nq)) score = Math.max(score, 55);
+        });
+      }
+      if (score > 0) results.push({ m: m, score: score });
+    });
+    results.sort(function(a,b){ return b.score - a.score; });
+    return results.slice(0, 8).map(function(r){ return r.m; });
+  }
+  function render(q) {
+    matches = search(q);
+    hiIdx = -1;
+    if (!matches.length) { list.classList.remove("open"); return; }
+    list.innerHTML = matches.map(function(m, i) {
+      return '<div class="autocomplete-item" data-i="' + i + '">' + highlight(m.n, q) + '</div>';
+    }).join("");
+    list.classList.add("open");
+  }
+  function select(idx) {
+    if (matches[idx]) {
+      input.value = matches[idx].n;
+      input.classList.remove("error");
+      var e = document.getElementById("err-major");
+      if (e) e.classList.remove("show");
+    }
+    list.classList.remove("open");
+    matches = []; hiIdx = -1;
+  }
+  input.addEventListener("input", function(){ render(this.value); });
+  input.addEventListener("keydown", function(e) {
+    var items = list.querySelectorAll(".autocomplete-item");
+    if (e.key === "ArrowDown") { e.preventDefault(); hiIdx = Math.min(hiIdx+1, items.length-1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); hiIdx = Math.max(hiIdx-1, 0); }
+    else if (e.key === "Enter" && hiIdx >= 0) { e.preventDefault(); select(hiIdx); return; }
+    else if (e.key === "Escape") { list.classList.remove("open"); return; }
+    items.forEach(function(it, i){ it.classList.toggle("hi", i === hiIdx); });
+  });
+  list.addEventListener("mousedown", function(e) {
+    var item = e.target.closest(".autocomplete-item");
+    if (item) { e.preventDefault(); select(parseInt(item.dataset.i, 10)); }
+  });
+  document.addEventListener("click", function(e) {
+    if (!input.contains(e.target) && !list.contains(e.target)) list.classList.remove("open");
+  });
+})();
+
+/* ══════════════════════════════════════════
+   TEAM STATUS → show / hide team fields
+   ══════════════════════════════════════════ */
+(function initTeamStatus() {
+  var sel    = document.getElementById("teamStatus");
+  var fields = document.getElementById("team-fields");
+  sel.addEventListener("change", function() {
+    var hasTeam = sel.value === "I have a team (1–4 people)";
+    fields.classList.toggle("visible", hasTeam);
+    if (!hasTeam) {
+      document.getElementById("teamName").value = "";
+      ["teammate1","teammate2","teammate3"].forEach(function(id){
+        document.getElementById(id).value = "";
+      });
+    }
+  });
+})();
+
+/* ══════════════════════════════════════════
+   DIETARY — toggle "Other" text field
+   ══════════════════════════════════════════ */
+(function initDietary() {
+  var otherChk  = document.getElementById("diet-other-chk");
+  var otherWrap = document.getElementById("dietary-other-wrap");
+  // "None" unchecks everything else
+  var noneChk = document.getElementById("diet-none");
+  document.querySelectorAll("input[name='diet']").forEach(function(cb) {
+    cb.addEventListener("change", function() {
+      if (cb === noneChk && cb.checked) {
+        document.querySelectorAll("input[name='diet']").forEach(function(c) {
+          if (c !== noneChk) c.checked = false;
+        });
+      } else if (cb !== noneChk && cb.checked) {
+        noneChk.checked = false;
+      }
+      otherWrap.classList.toggle("visible", otherChk.checked);
+    });
+  });
+})();
+
+function getDietary() {
+  var vals = [];
+  document.querySelectorAll("input[name='diet']:checked").forEach(function(cb) {
+    if (cb.value === "Other") {
+      var txt = document.getElementById("dietary-other-text").value.trim();
+      vals.push(txt ? "Other: " + txt : "Other");
+    } else {
+      vals.push(cb.value);
+    }
+  });
+  return vals.length ? vals.join(", ") : "None";
+}
+
+/* ── Build review summary ── */
+function buildReview() {
+  var summary = document.getElementById("review-summary");
+  var teamStatus = val("teamStatus");
+  var hasTeam = teamStatus === "I have a team (1–4 people)";
+  var mates = [val("teammate1"), val("teammate2"), val("teammate3")].filter(Boolean);
+  var fields = [
+    ["Name",          val("firstName") + " " + val("lastName")],
+    ["Email",         val("email")],
+    ["School",        val("school")],
+    ["Major",         val("major")],
+    ["Year",          val("year")],
+    ["Experience",    val("level")],
+    ["Team status",   teamStatus],
+  ];
+  if (hasTeam) {
+    fields.push(["Team name",   val("teamName")]);
+    if (mates.length) fields.push(["Teammates", mates.join(", ")]);
+  }
+  fields.push(
+    ["T-shirt",  val("tshirt")],
+    ["Track",    val("track") || "No preference"],
+    ["Dietary",  getDietary()]
+  );
+  summary.innerHTML = fields.map(function(f) {
+    return '<div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">'
+      + '<span style="min-width:110px;font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding-top:2px;">' + f[0] + '</span>'
+      + '<span style="color:var(--text);">' + (f[1] || '—') + '</span>'
+      + '</div>';
+  }).join("");
+}
+
+function val(id) {
+  var el = document.getElementById(id);
+  return el ? el.value : "";
+}
+
+/* ── Submit ── */
+async function hashPassword(pw) {
+  var enc = new TextEncoder();
+  var buf = await crypto.subtle.digest("SHA-256", enc.encode(pw));
+  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,"0"); }).join("");
+}
+
+/* Password show/hide toggle */
+(function initRegPwToggle() {
+  var inp    = document.getElementById("regPassword");
+  var toggle = document.getElementById("reg-pw-toggle");
+  var icon   = document.getElementById("reg-eye-icon");
+  if (!toggle) return;
+  toggle.addEventListener("click", function() {
+    var show = inp.type === "password";
+    inp.type = show ? "text" : "password";
+    icon.innerHTML = show
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  });
+})();
+
+async function onSubmit() {
+  var agree = document.getElementById("agree");
+  if (!agree.checked) {
+    agree.closest(".checkbox-group").style.outline = "1px solid var(--error)";
+    agree.closest(".checkbox-group").style.outlineOffset = "2px";
+    return;
+  }
+  agree.closest(".checkbox-group").style.outline = "";
+
+  /* Hide form panels + nav, show loading */
+  for (var i = 1; i <= totalSteps; i++) {
+    var p = document.getElementById("panel-" + i);
+    if (p) p.style.display = "none";
+  }
+  regNav.style.display = "none";
+  document.getElementById("submit-error").style.display = "none";
+  document.getElementById("submit-loading").style.display = "flex";
+
+  var teamStatus = val("teamStatus");
+  var hasTeam = teamStatus === "I have a team (1–4 people)";
+  // Hash password before including in payload
+  var passwordHash = await hashPassword(val("regPassword"));
+
+  var payload = {
+    action:      "register",
+    firstName:   val("firstName"),
+    lastName:    val("lastName"),
+    email:       val("email"),
+    phone:       val("phone"),
+    age:         val("age"),
+    gender:      val("gender"),
+    school:      val("school"),
+    major:       val("major"),
+    year:        val("year"),
+    level:       val("level"),
+    teamStatus:  teamStatus,
+    teamName:    hasTeam ? val("teamName") : "",
+    teammate1:   hasTeam ? val("teammate1") : "",
+    teammate2:   hasTeam ? val("teammate2") : "",
+    teammate3:   hasTeam ? val("teammate3") : "",
+    track:       val("track"),
+    tshirt:      val("tshirt"),
+    dietary:     getDietary(),
+    hearAbout:   val("hearAbout"),
+    notes:       val("notes"),
+    photoConsent: document.getElementById("photoConsent").checked ? "Yes" : "No",
+    passwordHash: passwordHash,
+    submittedAt:  new Date().toISOString(),
+  };
+
+  // Generate code client-side — Sheet stores the same code shown to the user
+  var confirmationCode = generateLocalCode();
+  payload.confirmationCode = confirmationCode;
+
+  /* ── Demo mode ── */
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+    setTimeout(function() {
+      saveSession(payload, confirmationCode);
+      showSuccess(confirmationCode);
+    }, 1500);
+    return;
+  }
+
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(payload),
+  })
+  .then(function() {
+    saveSession(payload, confirmationCode);
+    showSuccess(confirmationCode);
+  })
+  .catch(function() {
+    showError();
+  });
+}
+
+function saveSession(payload, code) {
+  var session = {
+    email:           payload.email,
+    firstName:       payload.firstName,
+    lastName:        payload.lastName,
+    confirmationCode:code,
+    teamStatus:      payload.teamStatus,
+    teamName:        payload.teamName,
+    teammate1:       payload.teammate1,
+    teammate2:       payload.teammate2,
+    teammate3:       payload.teammate3,
+    track:           payload.track,
+    tshirt:          payload.tshirt,
+    dietary:         payload.dietary,
+    school:          payload.school,
+    major:           payload.major,
+    year:            payload.year,
+    level:           payload.level,
+    age:             payload.age,
+    phone:           payload.phone,
+    status:          "Registered",
+    token:           "",   // no server token yet — set on first login
+    expiresAt:       Date.now() + (7 * 24 * 60 * 60 * 1000),
+  };
+  localStorage.setItem("kuh_session", JSON.stringify(session));
+}
+
+function generateLocalCode() {
+  var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  var code = "KUH-";
+  for (var i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+function showSuccess(code) {
+  document.getElementById("submit-loading").style.display = "none";
+  document.getElementById("conf-code-display").textContent = code;
+  var s = document.getElementById("submit-success");
+  s.style.display = "flex";
+  gsap.fromTo(s, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" });
+  // Show dashboard button now that session exists
+  var dashBtn = document.getElementById("go-dashboard-btn");
+  if (dashBtn) dashBtn.style.display = "inline-flex";
+}
+
+function showError() {
+  document.getElementById("submit-loading").style.display = "none";
+  regNav.style.display = "flex";
+  for (var i = 1; i <= totalSteps; i++) {
+    var p = document.getElementById("panel-" + i);
+    if (p) p.style.display = i === currentStep ? "flex" : "none";
+  }
+  var errEl = document.getElementById("submit-error");
+  errEl.style.display = "block";
+  gsap.fromTo(errEl, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.3 });
+}
+
+/* ── Page load animation ── */
+gsap.fromTo(".reg-hero-inner",
+  { opacity: 0, y: 30 },
+  { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", delay: 0.1 }
+);
+gsap.fromTo(".reg-form-card",
+  { opacity: 0, y: 24 },
+  { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.25 }
+);
+gsap.fromTo(".reg-sidebar",
+  { opacity: 0, y: 20 },
+  { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.4 }
+);
+
+}());
+</script>
+</body>
+</html>
