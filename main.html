@@ -1,0 +1,2118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KeanUHackThis 2027 &mdash; Build IRL</title>
+<meta name="description" content="KeanUHackThis 2027 — Registration Open. Kean University, NJ. 24 hours. Completely free. Register now." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* =====================================================================
+   DESIGN TOKENS
+   ===================================================================== */
+:root {
+  --navy:      #04091c;
+  --navy-2:    #060d22;
+  --badge:     #3060c8;
+  --badge-lt:  #5c8de8;
+  --badge-dim: #1a3878;
+  --ice:       #e8f0ff;
+  --text:      #d0dcf0;
+  --dim:       #4a6aaa;
+  --muted:     #2c4880;
+  --very-muted:#1a2e5a;
+  --border:    #0c1e3e;
+  --card:      #070f24;
+  --lime:      #b5e520;
+  --lime-dark: #8ab218;
+  --cream:     #d9c27a;
+  --gap:       clamp(24px, 6vw, 96px);
+}
+
+/* =====================================================================
+   RESET
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--navy); scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--badge); color: #fff; }
+
+/* =====================================================================
+   TYPOGRAPHY HELPERS
+   ===================================================================== */
+.mono {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-label { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.section-label::after { content: ""; flex: 1; max-width: 40px; height: 1px; background: var(--border); }
+
+.headline {
+  font-size: clamp(38px, 5.8vw, 88px);
+  font-weight: 800;
+  font-variation-settings: "wdth" 95, "opsz" 96;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  color: var(--ice);
+}
+.headline em { font-style: italic; color: var(--badge-lt); }
+
+/* =====================================================================
+   LAYOUT
+   ===================================================================== */
+.section {
+  padding: clamp(80px, 10vh, 130px) clamp(24px, 7vw, 110px);
+  position: relative;
+  overflow: hidden;
+}
+.section-alt { background: var(--navy-2); }
+
+/* =====================================================================
+   SCROLL PROGRESS BAR
+   ===================================================================== */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--badge), var(--badge-lt));
+  z-index: 1000;
+  transform-origin: left;
+}
+
+/* =====================================================================
+   NAV
+   ===================================================================== */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  padding: 0 clamp(24px, 5vw, 80px);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  border-bottom: 1px solid transparent;
+}
+.site-nav.scrolled {
+  background: rgba(4,9,28,0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-color: var(--border);
+}
+.site-nav.nav-hidden { transform: translateY(-100%); }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.nav-logo img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  clip-path: circle(47% at 50% 50%);
+}
+.nav-logo-text {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ice);
+  white-space: nowrap;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.5vw, 36px);
+  list-style: none;
+}
+.nav-links a {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ice); }
+.nav-cta {
+  padding: 9px 20px;
+  background: var(--badge);
+  color: #fff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: box-shadow 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 0 20px rgba(48,96,200,0.45); }
+
+/* hamburger */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px;
+  background: none;
+}
+.nav-burger span {
+  display: block;
+  width: 22px; height: 1.5px;
+  background: var(--text);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(4,9,28,0.96);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  padding: 24px clamp(24px,5vw,80px);
+  z-index: 899;
+  flex-direction: column;
+  gap: 20px;
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.nav-mobile a:last-child { border-bottom: none; }
+.nav-mobile a:hover { color: var(--ice); }
+
+/* =====================================================================
+   HERO — GRAND OPENING REVEAL
+   ===================================================================== */
+
+
+/* ── Main hero section ── */
+#hero {
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-top: 106px; /* 64px nav + 42px marquee */
+}
+
+/* Animated dot grid background */
+.hero-bg-grid {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(92,141,232,0.11) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 20%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 20%, transparent 100%);
+}
+
+.hero-bg-aurora {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 72% 68% at 16% 55%, rgba(48,96,200,0.30) 0%, transparent 60%),
+    radial-gradient(ellipse 48% 42% at 14% 82%, rgba(217,194,122,0.11) 0%, transparent 55%),
+    radial-gradient(ellipse 38% 38% at 84% 20%, rgba(48,96,200,0.11) 0%, transparent 55%);
+  will-change: transform;
+}
+
+#hero-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 1; pointer-events: none;
+  opacity: 0.52;
+}
+
+/* ── Corner crosshair decorators ── */
+.hero-corner {
+  position: absolute;
+  width: 22px; height: 22px;
+  z-index: 10;
+  pointer-events: none;
+}
+.hero-corner.tl { top: 120px; left: clamp(24px,4vw,80px);
+  border-top: 1px solid rgba(92,141,232,0.45); border-left:  1px solid rgba(92,141,232,0.45); }
+.hero-corner.tr { top: 120px; right: clamp(24px,4vw,80px);
+  border-top: 1px solid rgba(92,141,232,0.45); border-right: 1px solid rgba(92,141,232,0.45); }
+.hero-corner.bl { bottom: 44px; left: clamp(24px,4vw,80px);
+  border-bottom: 1px solid rgba(92,141,232,0.45); border-left: 1px solid rgba(92,141,232,0.45); }
+.hero-corner.br { bottom: 44px; right: clamp(24px,4vw,80px);
+  border-bottom: 1px solid rgba(92,141,232,0.45); border-right: 1px solid rgba(92,141,232,0.45); }
+
+/* ── System status badge (bottom-left) ── */
+.hero-status {
+  position: absolute;
+  bottom: 32px; left: clamp(24px,4vw,80px);
+  z-index: 10;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(92,141,232,0.50);
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-status::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #3dba8c;
+  box-shadow: 0 0 8px #3dba8c;
+  animation: status-pulse 2.2s ease-in-out infinite;
+}
+@keyframes status-pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 8px #3dba8c; }
+  50%      { opacity: 0.4; box-shadow: 0 0 3px #3dba8c; }
+}
+
+/* ── Inner layout: logo left / copy right ── */
+.hero-inner {
+  position: relative; z-index: 10;
+  width: 100%;
+  padding: 0 clamp(24px,6vw,100px);
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  align-items: center;
+  gap: clamp(20px,4vw,64px);
+}
+
+/* Logo panel */
+.hero-logo-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+.hero-logo-wrap {
+  height: min(74vh, 50vw);
+  filter:
+    drop-shadow(0 0 32px rgba(48,96,200,0.62))
+    drop-shadow(0 0 80px rgba(48,96,200,0.28))
+    drop-shadow(0 0 140px rgba(217,194,122,0.16));
+  animation: logo-float 8s ease-in-out infinite;
+}
+.hero-logo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  clip-path: circle(47% at 50% 50%);
+  display: block;
+}
+@keyframes logo-float {
+  0%,100% { transform: translateY(0px) rotate(0deg); }
+  35%      { transform: translateY(-9px) rotate(0.6deg); }
+  68%      { transform: translateY(-4px) rotate(-0.4deg); }
+}
+
+/* Copy panel */
+.hero-copy-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  will-change: transform, opacity;
+}
+.hero-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--badge-lt);
+  margin-bottom: 22px;
+  display: flex; align-items: center; gap: 12px;
+  overflow: hidden;
+}
+.hero-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: var(--badge-lt);
+  flex-shrink: 0;
+}
+
+/* Display headline: 3-line reveal */
+.hero-display {
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  margin-bottom: 30px;
+}
+.h-line {
+  display: block;
+  font-weight: 800;
+  font-variation-settings: "wdth" 92, "opsz" 96;
+}
+.h-line-1 {
+  font-size: clamp(54px,8.8vw,155px);
+  color: var(--ice);
+}
+.h-line-2 {
+  font-size: clamp(54px,8.8vw,155px);
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--badge-lt);
+  margin-top: -0.04em;
+}
+.h-line-3 {
+  font-size: clamp(54px,8.8vw,155px);
+  font-style: italic;
+  color: var(--ice);
+  margin-top: -0.04em;
+  text-shadow: 0 0 80px rgba(48,96,200,0.22);
+}
+
+/* Stat chips row */
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 28px;
+}
+.stat-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 13px;
+  background: rgba(48,96,200,0.10);
+  border: 1px solid rgba(48,96,200,0.20);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px; letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(92,141,232,0.75);
+  white-space: nowrap;
+}
+.stat-chip-val {
+  font-size: 11px; font-weight: 700;
+  color: var(--ice);
+}
+
+/* Buttons */
+.hero-cta {
+  display: flex; flex-wrap: wrap;
+  align-items: center; gap: 10px;
+}
+.btn-primary {
+  padding: 13px 28px;
+  background: var(--badge); color: #fff;
+  font-weight: 700; font-size: 14px;
+  letter-spacing: -0.01em;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 32px rgba(48,96,200,0.55); }
+.btn-ghost {
+  padding: 13px 28px;
+  background: transparent; color: var(--text);
+  font-weight: 500; font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--badge-lt); color: #fff; }
+
+/* Vertical scroll hint (right edge) */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 32px; right: clamp(24px,4vw,80px);
+  z-index: 10;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.20em;
+  text-transform: uppercase; color: var(--very-muted);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.hero-scroll-hint::after {
+  content: "";
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, var(--very-muted), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse {
+  0%,100% { opacity: 0.35; transform: scaleY(0.65) translateY(0); transform-origin: top; }
+  50%      { opacity: 1;   transform: scaleY(1) translateY(0); }
+}
+
+
+/* =====================================================================
+   MARQUEE TICKER
+   ===================================================================== */
+.marquee-strip {
+  position: fixed;
+  top: 64px;
+  left: 0; right: 0;
+  z-index: 850;
+  background: var(--badge);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 11px 0;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  border-bottom: 1px solid var(--badge-dim);
+  box-shadow: 0 4px 24px rgba(48,96,200,0.35);
+}
+.marquee-inner {
+  display: inline-flex;
+  animation: ticker 28s linear infinite;
+}
+.marquee-inner:hover { animation-play-state: paused; }
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 800;
+  font-variation-settings: "wdth" 100, "opsz" 48;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-transform: uppercase;
+}
+.marquee-item .sep {
+  font-size: 10px; color: rgba(255,255,255,0.35);
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* =====================================================================
+   ABOUT
+   ===================================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 90px);
+  align-items: start;
+  margin-top: clamp(40px, 6vh, 72px);
+}
+.about-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stat-block {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+}
+.stat-block:first-child { border-top: 1px solid var(--border); }
+.stat-num {
+  font-size: clamp(52px, 7vw, 100px);
+  font-weight: 800; font-style: italic;
+  font-variation-settings: "wdth" 80, "opsz" 96;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--badge-lt);
+}
+.stat-num sup {
+  font-size: 0.45em; vertical-align: super;
+  color: var(--badge-lt);
+}
+.stat-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.about-text {
+  display: flex; flex-direction: column; gap: 24px;
+  padding-top: 8px;
+}
+.about-text p {
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.65;
+  color: var(--dim);
+}
+.about-text p strong { color: var(--text); font-weight: 600; }
+.about-logo-watermark {
+  opacity: 0.04;
+  position: absolute;
+  right: -60px; bottom: -60px;
+  width: min(420px, 50vw);
+  pointer-events: none;
+  filter: grayscale(1) invert(1);
+}
+
+/* =====================================================================
+   TRACKS
+   ===================================================================== */
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  margin-top: clamp(40px, 6vh, 72px);
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.track-card {
+  background: var(--card);
+  padding: clamp(28px,4vw,48px);
+  display: flex; flex-direction: column;
+  gap: 16px;
+  transition: background 0.3s;
+  cursor: default;
+}
+.track-card:hover { background: #0c1632; }
+.track-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: rgba(48,96,200,0.15);
+  border: 1px solid rgba(48,96,200,0.30);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+.track-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+}
+.track-name {
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 800;
+  font-variation-settings: "wdth" 95, "opsz" 48;
+  letter-spacing: -0.03em;
+  color: var(--ice);
+  line-height: 1.1;
+}
+.track-desc {
+  font-size: 14px; line-height: 1.6;
+  color: var(--dim); max-width: 38ch;
+}
+.track-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: auto;
+}
+.track-tag {
+  padding: 4px 10px;
+  background: rgba(48,96,200,0.12);
+  border: 1px solid rgba(48,96,200,0.22);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--badge-lt);
+}
+
+/* =====================================================================
+   SCHEDULE
+   ===================================================================== */
+.schedule-days {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: clamp(40px, 6vh, 72px);
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.schedule-day {
+  background: var(--card);
+  padding: clamp(24px,3.5vw,40px);
+}
+.day-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.20em;
+  text-transform: uppercase; color: var(--muted);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.day-name {
+  font-size: clamp(18px,2vw,26px);
+  font-weight: 800; color: var(--ice);
+  letter-spacing: -0.02em;
+  margin-top: 6px;
+}
+.schedule-events { display: flex; flex-direction: column; gap: 0; }
+.schedule-event {
+  display: flex; align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.schedule-event:last-child { border-bottom: none; }
+.event-time {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.08em;
+  color: var(--muted);
+  white-space: nowrap;
+  padding-top: 2px;
+  min-width: 52px;
+}
+.event-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--badge-dim);
+  margin-top: 6px;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.schedule-event:hover .event-dot { background: var(--badge-lt); }
+.event-title {
+  font-size: 14px; font-weight: 600;
+  color: var(--text); line-height: 1.3;
+}
+.event-note {
+  font-size: 12px; color: var(--dim);
+  margin-top: 2px;
+}
+.event-badge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  background: rgba(48,96,200,0.15);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--badge-lt);
+}
+.schedule-note {
+  margin-top: 20px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.10em;
+  color: var(--very-muted);
+  text-align: center;
+}
+
+/* =====================================================================
+   PRIZES
+   ===================================================================== */
+/*
+  ┌─────────────────────────────────────────────────────────┐
+  │  TO UPDATE PRIZES: search for data-prize-label and      │
+  │  change the text inside .prize-amount elements.         │
+  └─────────────────────────────────────────────────────────┘
+*/
+.prizes-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: clamp(32px,5vh,56px);
+}
+.prizes-note {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+  text-align: right;
+  line-height: 1.6;
+}
+.prizes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+/* Grand prize spans full width */
+.prize-grand {
+  grid-column: 1 / -1;
+  background: var(--badge);
+  padding: clamp(32px,5vw,60px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+.prize-label-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 12px;
+}
+.prize-amount {
+  font-size: clamp(48px,7vw,110px);
+  font-weight: 800; font-style: italic;
+  font-variation-settings: "wdth" 80, "opsz" 96;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: #fff;
+}
+.prize-amount sup { font-size: 0.4em; vertical-align: super; }
+.prize-title {
+  font-size: clamp(18px,2vw,26px);
+  font-weight: 700; color: #fff;
+  margin-top: 12px;
+}
+.prize-perks {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 10px;
+}
+.prize-perks li {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.4;
+}
+.prize-perks li::before {
+  content: "&#8594;";
+  position: absolute; left: 0;
+  color: rgba(255,255,255,0.45);
+}
+
+.prize-card {
+  background: var(--card);
+  padding: clamp(24px,3.5vw,40px);
+  display: flex; flex-direction: column;
+  gap: 10px;
+}
+.prize-card-amount {
+  font-size: clamp(32px,4.5vw,64px);
+  font-weight: 800; font-style: italic;
+  font-variation-settings: "wdth" 80, "opsz" 96;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: var(--ice);
+}
+.prize-card-amount sup { font-size: 0.4em; vertical-align: super; }
+.prize-card-title {
+  font-size: clamp(15px,1.5vw,20px);
+  font-weight: 600; color: var(--text);
+}
+.prize-card-perks {
+  list-style: none;
+  margin-top: 8px;
+  display: flex; flex-direction: column;
+  gap: 6px;
+}
+.prize-card-perks li {
+  font-size: 13px; color: var(--dim);
+  padding-left: 16px; position: relative;
+  line-height: 1.4;
+}
+.prize-card-perks li::before {
+  content: "\2014";
+  position: absolute; left: 0;
+  color: var(--very-muted);
+}
+
+.prize-side-grid {
+  margin-top: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+}
+.prize-side-card {
+  background: var(--navy-2);
+  padding: clamp(20px,3vw,36px);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.prize-side-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.prize-side-title {
+  font-size: clamp(16px,1.6vw,22px);
+  font-weight: 700; color: var(--text);
+}
+.prize-side-perks {
+  list-style: none;
+  margin-top: 6px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.prize-side-perks li {
+  font-size: 12px; color: var(--dim);
+  padding-left: 14px; position: relative;
+}
+.prize-side-perks li::before {
+  content: "\2014";
+  position: absolute; left: 0;
+  color: var(--very-muted);
+}
+
+/* =====================================================================
+   SPONSORS
+   ===================================================================== */
+.sponsors-intro {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: clamp(40px,6vh,64px);
+}
+.sponsors-cta-block { flex-shrink: 0; }
+.sponsors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+.sponsor-slot {
+  background: var(--card);
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.sponsor-slot:hover { background: #0c1632; }
+/* For real sponsors: replace the inner content with an <img> tag */
+.sponsor-slot-inner {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--very-muted);
+}
+.sponsor-slot img {
+  max-width: 130px; max-height: 60px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+.sponsor-slot:hover img { opacity: 0.85; }
+
+.sponsor-cta-bar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: clamp(20px,3vw,32px) clamp(24px,4vw,48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.sponsor-cta-text h3 {
+  font-size: clamp(16px,1.6vw,22px);
+  font-weight: 700; color: var(--ice);
+}
+.sponsor-cta-text p {
+  font-size: 13px; color: var(--dim);
+  margin-top: 4px;
+}
+
+/* =====================================================================
+   FAQ
+   ===================================================================== */
+.faq-list {
+  margin-top: clamp(40px,6vh,64px);
+  border-top: 1px solid var(--border);
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(18px,2.5vh,26px) 0;
+  background: none;
+  color: var(--text);
+  font-size: clamp(15px,1.4vw,20px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.faq-question:hover { color: var(--ice); }
+.faq-icon {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--dim);
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.3s;
+}
+.faq-item.open .faq-icon {
+  background: var(--badge);
+  border-color: var(--badge);
+  color: #fff;
+  transform: rotate(45deg);
+}
+.faq-answer {
+  height: 0; overflow: hidden;
+}
+.faq-answer-inner {
+  padding-bottom: clamp(16px,2.5vh,24px);
+  font-size: clamp(14px,1.1vw,16px);
+  line-height: 1.7;
+  color: var(--dim);
+  max-width: 72ch;
+}
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+.site-footer {
+  background: #030812;
+  border-top: 1px solid var(--border);
+  padding: clamp(48px,7vh,80px) clamp(24px,7vw,110px) clamp(28px,4vh,48px);
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  padding-bottom: clamp(32px,5vh,56px);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: clamp(24px,4vh,40px);
+  align-items: start;
+}
+.footer-logo {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.footer-logo img {
+  width: 44px; height: 44px;
+  object-fit: contain;
+  clip-path: circle(47% at 50% 50%);
+  filter: drop-shadow(0 0 16px rgba(48,96,200,0.4));
+}
+.footer-logo-text {
+  font-size: 18px; font-weight: 800;
+  font-variation-settings: "wdth" 95, "opsz" 48;
+  letter-spacing: -0.02em;
+  color: var(--ice);
+}
+.footer-tagline {
+  font-size: 14px; color: var(--dim); line-height: 1.5;
+  max-width: 38ch;
+}
+.footer-links-group {
+  display: flex; gap: clamp(32px,4vw,64px);
+}
+.footer-link-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-link-head {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.footer-link-col a {
+  font-size: 13px; color: var(--dim);
+  transition: color 0.2s;
+}
+.footer-link-col a:hover { color: var(--ice); }
+.footer-bottom {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-copy {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.10em;
+  color: var(--very-muted);
+}
+.footer-socials {
+  display: flex; gap: 8px;
+}
+.footer-socials a {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  transition: border-color 0.2s, color 0.2s;
+}
+.footer-socials a:hover { border-color: var(--badge); color: var(--badge-lt); }
+
+/* =====================================================================
+   UTILITY / REVEAL STATES
+   ===================================================================== */
+.reveal { opacity: 0; transform: translateY(40px); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* =====================================================================
+   RESPONSIVE
+   ===================================================================== */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; grid-template-rows: auto auto; padding-top: 88px; gap: 20px; align-items: start; }
+  .hero-logo-panel { order: -1; height: min(44vw, 260px); }
+  .hero-logo-wrap { height: 100%; }
+  .hero-copy-panel { align-items: center; text-align: center; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-stats { justify-content: center; }
+  .hero-cta { justify-content: center; }
+  .h-line-1,.h-line-2,.h-line-3 { font-size: clamp(42px,12vw,80px); }
+  .hero-corner.bl, .hero-corner.br { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .tracks-grid { grid-template-columns: 1fr; }
+  .schedule-days { grid-template-columns: 1fr; }
+  .prizes-grid { grid-template-columns: 1fr; }
+  .prize-grand { grid-template-columns: 1fr; }
+  .prize-side-grid { grid-template-columns: 1fr; }
+  .sponsors-intro { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-links-group { flex-wrap: wrap; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-burger { display: flex; }
+  .prizes-header { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .hero-corner, .hero-status, .hero-scroll-hint { display: none; }
+  .h-line-2 { -webkit-text-stroke: 1px var(--badge-lt); }
+  .sponsor-cta-bar { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .h-line { clip-path: none !important; opacity: 1 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- progress bar -->
+<div id="progress-bar"></div>
+
+<!-- =====================================================================
+     NAV
+     ===================================================================== -->
+<nav class="site-nav" id="site-nav">
+  <a class="nav-logo" href="#hero">
+    <img src="uploads/hackathon_logo2026.png" alt="KeanUHackThis logo" />
+    <span class="nav-logo-text">KeanUHackThis</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#prizes">Prizes</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="register.html" class="nav-cta" id="nav-cta">Register Now</a>
+  <button class="nav-burger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<nav class="nav-mobile" id="nav-mobile">
+  <a href="#about">About</a>
+  <a href="#tracks">Tracks</a>
+  <a href="#schedule">Schedule</a>
+  <a href="#prizes">Prizes</a>
+  <a href="#sponsors">Sponsors</a>
+  <a href="#faq">FAQ</a>
+  <a href="register.html" class="btn-primary" id="mobile-nav-cta" style="text-align:center;justify-content:center;">Register Now</a>
+</nav>
+<script>
+(function(){
+  try {
+    var s = JSON.parse(localStorage.getItem("kuh_session") || "null");
+    if (!s || s.expiresAt <= Date.now()) return;
+    /* Nav CTA */
+    var cta = document.getElementById("nav-cta");
+    if (cta) { cta.textContent = "Hi, " + s.firstName + " →"; cta.href = "dashboard.html"; }
+    var mcta = document.getElementById("mobile-nav-cta");
+    if (mcta) { mcta.textContent = "My Registration →"; mcta.href = "dashboard.html"; }
+    /* Hero CTA — replace "Register Now" with dashboard link */
+    var heroCta = document.getElementById("hero-cta");
+    if (heroCta) {
+      var heroBtn = heroCta.querySelector("a.btn-primary");
+      if (heroBtn) { heroBtn.textContent = "My Dashboard →"; heroBtn.href = "dashboard.html"; }
+    }
+  } catch(e) {}
+})();
+</script>
+
+<!-- =====================================================================
+     MARQUEE TICKER (fixed below nav)
+     ===================================================================== -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <!-- duplicated for seamless loop -->
+    <span class="marquee-item">BUILD IRL <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">24 HRS <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">TBD IN PRIZES <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">TBD BUILDERS <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">FREE FOOD <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">KEAN UNIVERSITY, NJ <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">SPRING 2027 <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">ALL MAJORS WELCOME <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">BUILD IRL <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">24 HRS <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">TBD IN PRIZES <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">TBD BUILDERS <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">FREE FOOD <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">KEAN UNIVERSITY, NJ <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">SPRING 2027 <span class="sep">&#10022;</span></span>
+    <span class="marquee-item">ALL MAJORS WELCOME <span class="sep">&#10022;</span></span>
+  </div>
+</div>
+
+<!-- =====================================================================
+     HERO
+     ===================================================================== -->
+
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-aurora" id="hero-aurora"></div>
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- Corner crosshair decorators -->
+  <div class="hero-corner tl"></div>
+  <div class="hero-corner tr"></div>
+  <div class="hero-corner bl"></div>
+  <div class="hero-corner br"></div>
+
+  <!-- System status (bottom-left) -->
+  <div class="hero-status" id="hero-status">Kean University &mdash; NJ &mdash; Spring&nbsp;2027</div>
+
+  <!-- Two-column inner layout -->
+  <div class="hero-inner">
+
+    <!-- Left: Logo -->
+    <div class="hero-logo-panel" id="hero-logo-panel">
+      <div class="hero-logo-wrap" id="hero-logo-wrap">
+        <img src="uploads/hackathon_logo2026.png" alt="KeanUHackThis Cougar" />
+      </div>
+    </div>
+
+    <!-- Right: Copy -->
+    <div class="hero-copy-panel" id="hero-copy-panel">
+      <p class="hero-eyebrow" id="hero-eyebrow">KeanUHackThis &mdash; Spring 2027</p>
+
+      <h1 class="hero-display">
+        <span class="h-line h-line-1" id="hline1">HACK</span>
+        <span class="h-line h-line-2" id="hline2">THE</span>
+        <span class="h-line h-line-3" id="hline3">FUTURE.</span>
+      </h1>
+
+      <div class="hero-stats" id="hero-stats">
+        <span class="stat-chip"><span class="stat-chip-val">TBD</span>&nbsp;in prizes</span>
+        <span class="stat-chip"><span class="stat-chip-val">24</span>&nbsp;hours</span>
+        <span class="stat-chip"><span class="stat-chip-val">TBD</span>&nbsp;builders</span>
+        <span class="stat-chip"><span class="stat-chip-val">FREE</span>&nbsp;to enter</span>
+      </div>
+
+      <div class="hero-cta" id="hero-cta">
+        <a href="register.html" class="btn-primary">Register Now &rarr;</a>
+        <a href="mailto:acmkeanchapter@kean.edu" class="btn-ghost">Sponsor Us</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vertical scroll hint (right edge) -->
+  <div class="hero-scroll-hint" id="hero-scroll-hint">Scroll to explore</div>
+</section>
+
+<!-- =====================================================================
+     ABOUT
+     ===================================================================== -->
+<section id="about" class="section section-alt">
+  <img class="about-logo-watermark" src="uploads/hackathon_logo2026.png" alt="" aria-hidden="true" />
+
+  <div class="section-label mono">
+    <span>01 / About</span>
+  </div>
+
+  <h2 class="headline parallax-headline">
+    Where builders<br>ship <em>real things.</em>
+  </h2>
+
+  <div class="about-grid">
+    <div class="about-stats">
+      <div class="stat-block reveal">
+        <div class="stat-num"><sup>$</sup><span class="counter" data-target="0">TBD</span></div>
+        <div class="stat-label">Entry cost &mdash; completely free</div>
+      </div>
+      <div class="stat-block reveal">
+        <div class="stat-num"><span class="counter-plain">48</span></div>
+        <div class="stat-label">Hours straight &mdash; no breaks required</div>
+      </div>
+      <div class="stat-block reveal">
+        <div class="stat-num"><span class="counter-plain">400</span><sup>+</sup></div>
+        <div class="stat-label">Builders expected &mdash; every major welcome</div>
+      </div>
+    </div>
+
+    <div class="about-text">
+      <p class="reveal">
+        <strong>KeanUHackThis</strong> is Kean University&rsquo;s flagship hackathon &mdash;
+        a 48-hour overnight sprint where students from every major and skill level come
+        together to build something real. No prior experience required.
+      </p>
+      <p class="reveal">
+        You&rsquo;ll have access to <strong>mentors from industry</strong>, dedicated
+        workshop sessions, free food around the clock, and a community of builders
+        who are here to make something that matters.
+      </p>
+      <p class="reveal">
+        Whether you&rsquo;re writing your first line of code or shipping your tenth
+        side project, KeanUHackThis is where you prove what you can build
+        in <strong>48 hours</strong>.
+      </p>
+      <div class="reveal" style="margin-top:8px;">
+        <a href="register.html" class="btn-primary" style="display:inline-flex;">
+          Register Now &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     TRACKS
+     ===================================================================== -->
+<section id="tracks" class="section">
+  <div class="section-label mono"><span>02 / Tracks</span></div>
+  <h2 class="headline parallax-headline">Pick your<br><em>battleground.</em></h2>
+
+  <div class="tracks-grid">
+    <!-- Track 1 -->
+    <div class="track-card reveal">
+      <div class="track-icon">&#129302;</div>
+      <div class="track-num">Track 01</div>
+      <div class="track-name">AI &amp; Intelligence</div>
+      <p class="track-desc">
+        Build with language models, computer vision, data pipelines,
+        or inference engines. Make machines understand the world better.
+      </p>
+      <div class="track-tags">
+        <span class="track-tag">LLMs</span>
+        <span class="track-tag">Computer Vision</span>
+        <span class="track-tag">Data</span>
+        <span class="track-tag">ML</span>
+      </div>
+    </div>
+
+    <!-- Track 2 -->
+    <div class="track-card reveal">
+      <div class="track-icon">&#127961;</div>
+      <div class="track-num">Track 02</div>
+      <div class="track-name">Civic &amp; Social Impact</div>
+      <p class="track-desc">
+        Technology for the community. Accessibility, equity, local
+        government, public health &mdash; ship something that helps people.
+      </p>
+      <div class="track-tags">
+        <span class="track-tag">Accessibility</span>
+        <span class="track-tag">Community</span>
+        <span class="track-tag">Equity</span>
+      </div>
+    </div>
+
+    <!-- Track 3 -->
+    <div class="track-card reveal">
+      <div class="track-icon">&#9889;</div>
+      <div class="track-num">Track 03</div>
+      <div class="track-name">Hardware &amp; Embedded</div>
+      <p class="track-desc">
+        Robots, IoT sensors, wearables, physical installations.
+        If it has wires and ambition, it belongs here.
+      </p>
+      <div class="track-tags">
+        <span class="track-tag">Robotics</span>
+        <span class="track-tag">IoT</span>
+        <span class="track-tag">Arduino</span>
+        <span class="track-tag">Pi</span>
+      </div>
+    </div>
+
+    <!-- Track 4 -->
+    <div class="track-card reveal">
+      <div class="track-icon">&#127775;</div>
+      <div class="track-num">Track 04</div>
+      <div class="track-name">Open Innovation</div>
+      <p class="track-desc">
+        No constraints. Your idea, your rules, your execution.
+        The wildcard track rewards originality above all else.
+      </p>
+      <div class="track-tags">
+        <span class="track-tag">Wildcard</span>
+        <span class="track-tag">Creative</span>
+        <span class="track-tag">Anything</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SCHEDULE
+     ===================================================================== -->
+<section id="schedule" class="section section-alt">
+  <div class="section-label mono"><span>03 / Schedule</span></div>
+  <h2 class="headline parallax-headline">The 48-hour<br><em>playbook.</em></h2>
+
+  <div class="schedule-days">
+    <!-- Day 1 -->
+    <div class="schedule-day reveal">
+      <div class="day-label mono">Day 01</div>
+      <div class="day-name">Friday</div>
+      <div class="schedule-events">
+        <div class="schedule-event">
+          <span class="event-time">5 PM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Check-in &amp; Registration</div>
+            <div class="event-note">Pick up your badge, find your team</div>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">7 PM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Opening Ceremony</div>
+            <div class="event-note">Sponsors, prizes, track briefings</div>
+            <span class="event-badge">All hands</span>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">9 PM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Hacking Begins</div>
+            <div class="event-note">Clock starts. Build something real.</div>
+            <span class="event-badge">T&ndash;0</span>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">12 AM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Midnight Fuel</div>
+            <div class="event-note">Food, coffee, and a second wind</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="schedule-day reveal">
+      <div class="day-label mono">Day 02</div>
+      <div class="day-name">Saturday</div>
+      <div class="schedule-events">
+        <div class="schedule-event">
+          <span class="event-time">9 AM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Morning Check-in</div>
+            <div class="event-note">Breakfast + mentor office hours open</div>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">1 PM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Midpoint Checkpoint</div>
+            <div class="event-note">Optional progress share with mentors</div>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">All day</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Workshop Sessions</div>
+            <div class="event-note">API deep-dives, design sprints, pitching</div>
+            <span class="event-badge">Optional</span>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">11 PM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Night Fuel Round 2</div>
+            <div class="event-note">Keep going. You&rsquo;ve got this.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="schedule-day reveal">
+      <div class="day-label mono">Day 03</div>
+      <div class="day-name">Sunday</div>
+      <div class="schedule-events">
+        <div class="schedule-event">
+          <span class="event-time">9 AM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Code Freeze</div>
+            <div class="event-note">Submit your project on Devpost</div>
+            <span class="event-badge">Deadline</span>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">10 AM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Demo Setup</div>
+            <div class="event-note">Set up your table and presentation</div>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">11 AM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Judging</div>
+            <div class="event-note">Judges circulate &mdash; demo your build</div>
+            <span class="event-badge">All tracks</span>
+          </div>
+        </div>
+        <div class="schedule-event">
+          <span class="event-time">2 PM</span>
+          <span class="event-dot"></span>
+          <div class="event-info">
+            <div class="event-title">Awards Ceremony</div>
+            <div class="event-note">Winners, prizes, and what comes next</div>
+            <span class="event-badge">Finale</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="schedule-note mono">// All times in Eastern. Schedule subject to change.</p>
+</section>
+
+<!-- =====================================================================
+     PRIZES
+     ===================================================================== -->
+<section id="prizes" class="section">
+  <div class="prizes-header">
+    <div>
+      <div class="section-label mono"><span>04 / Prizes</span></div>
+      <!--
+        PRIZE HEADLINE — update when pool is confirmed
+      -->
+      <h2 class="headline parallax-headline">
+        Cash, hardware,<br>and <em>bragging rights.</em>
+      </h2>
+    </div>
+    <div class="prizes-note mono">
+      Prize pool<br>TBD &mdash; 2027
+    </div>
+  </div>
+
+  <!--
+    ╔══════════════════════════════════════════════════╗
+    ║  EDIT PRIZES BELOW                               ║
+    ║  Change the text inside .prize-amount and        ║
+    ║  .prize-card-amount elements to update values.   ║
+    ╚══════════════════════════════════════════════════╝
+  -->
+  <div class="prizes-grid reveal">
+    <!-- GRAND PRIZE — edit amount and perks below -->
+    <div class="prize-grand">
+      <div class="prize-grand-left">
+        <div class="prize-label-tag">Grand Prize</div>
+        <div class="prize-amount"><sup>$</sup>TBD</div>     <!-- EDIT: e.g. 10,000 -->
+        <div class="prize-title">Best in Show</div>
+      </div>
+      <div class="prize-grand-right">
+        <ul class="prize-perks">
+          <li>Cash split across the team</li>           <!-- EDIT perks -->
+          <li>Fast-track sponsor interviews</li>
+          <li>Featured in Kean University press</li>
+          <li>The Trophy (it is heavy)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2nd Place — edit amount below -->
+    <div class="prize-card reveal">
+      <div class="prize-label-tag" style="color:var(--muted);">Runner-Up</div>
+      <div class="prize-card-amount"><sup>$</sup>TBD</div>  <!-- EDIT: e.g. 5,000 -->
+      <div class="prize-card-title">Second Place</div>
+      <ul class="prize-card-perks">
+        <li>Cash split per teammate</li>               <!-- EDIT perks -->
+        <li>Hardware bundle</li>
+        <li>Sponsor swag stack</li>
+      </ul>
+    </div>
+
+    <!-- 3rd Place — edit amount below -->
+    <div class="prize-card reveal">
+      <div class="prize-label-tag" style="color:var(--muted);">Third Place</div>
+      <div class="prize-card-amount"><sup>$</sup>TBD</div>  <!-- EDIT: e.g. 2,500 -->
+      <div class="prize-card-title">Third Place</div>
+      <ul class="prize-card-perks">
+        <li>Cash split per teammate</li>               <!-- EDIT perks -->
+        <li>Mechanical keyboards</li>
+      </ul>
+    </div>
+
+    <!-- Track Winners — edit amount below -->
+    <div class="prize-card reveal">
+      <div class="prize-label-tag" style="color:var(--muted);">Track Winners &middot; 4&times;</div>
+      <div class="prize-card-amount"><sup>$</sup>TBD <span style="font-size:0.45em;font-style:normal;color:var(--dim);">each</span></div> <!-- EDIT -->
+      <div class="prize-card-title">Best in Track</div>
+      <ul class="prize-card-perks">
+        <li>One winner per track</li>                  <!-- EDIT perks -->
+        <li>Sponsor mentorship slot</li>
+        <li>Track trophy</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Side prizes row -->
+  <div class="prize-side-grid reveal">
+    <!-- Beginner Pool — edit amount below -->
+    <div class="prize-side-card">
+      <div class="prize-side-label">First-Time Hackers</div>
+      <div class="prize-side-title">Beginner Pool</div>
+      <ul class="prize-side-perks">
+        <li>Prize for top first-timer team</li>        <!-- EDIT -->
+        <li>Dedicated mentor track</li>
+        <li>You can do this. Promise.</li>
+      </ul>
+    </div>
+
+    <!-- Side Quests — edit below -->
+    <div class="prize-side-card">
+      <div class="prize-side-label">&#9733; Side Quests</div>
+      <div class="prize-side-title">Mini-Prizes</div>
+      <ul class="prize-side-perks">
+        <li>Best use of an LLM</li>                    <!-- EDIT categories -->
+        <li>Most stubbornly analog</li>
+        <li>Best 1-hour speedrun</li>
+        <li>&ldquo;Why did you make this&rdquo; award</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SPONSORS
+     ===================================================================== -->
+<section id="sponsors" class="section section-alt">
+  <div class="sponsors-intro">
+    <div>
+      <div class="section-label mono"><span>05 / Sponsors</span></div>
+      <h2 class="headline parallax-headline">
+        Powered by people<br>who <em>believe in builders.</em>
+      </h2>
+    </div>
+    <div class="sponsors-cta-block">
+      <a href="mailto:acmkeanchapter@kean.edu" class="btn-primary reveal">
+        Become a Sponsor &rarr;
+      </a>
+    </div>
+  </div>
+
+  <!--
+    ╔══════════════════════════════════════════════════╗
+    ║  ADD SPONSORS BELOW                              ║
+    ║  Replace <span class="sponsor-slot-inner">       ║
+    ║  with <img src="path/to/logo.png" alt="Name" />  ║
+    ╚══════════════════════════════════════════════════╝
+  -->
+  <div class="sponsors-grid reveal">
+    <div class="sponsor-slot"><span class="sponsor-slot-inner">Your logo</span></div>
+    <div class="sponsor-slot"><span class="sponsor-slot-inner">Your logo</span></div>
+    <div class="sponsor-slot"><span class="sponsor-slot-inner">Your logo</span></div>
+    <div class="sponsor-slot"><span class="sponsor-slot-inner">Your logo</span></div>
+    <div class="sponsor-slot"><span class="sponsor-slot-inner">Your logo</span></div>
+    <div class="sponsor-slot"><span class="sponsor-slot-inner">Your logo</span></div>
+  </div>
+
+  <div class="sponsor-cta-bar reveal">
+    <div class="sponsor-cta-text">
+      <h3>Want your logo here?</h3>
+      <p>We&rsquo;d love to introduce you to 400+ of NJ&rsquo;s most driven builders.</p>
+    </div>
+    <a href="mailto:acmkeanchapter@kean.edu" class="btn-primary">Sponsor packet &rarr;</a>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FAQ
+     ===================================================================== -->
+<section id="faq" class="section">
+  <div class="section-label mono"><span>06 / FAQ</span></div>
+  <h2 class="headline parallax-headline">Got <em>questions?</em></h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question">
+        Who can participate?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Any currently enrolled undergraduate or graduate student aged 18+ can participate. All majors, all skill levels &mdash; from first-time coders to seasoned engineers. Everyone who attends must register individually.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Do I need to have a team?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No &mdash; you can come solo and form a team at the event during the team-building session. Teams can have up to 4 members. Solo submissions are also accepted.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How much does it cost to participate?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Absolutely nothing. KeanUHackThis is completely free to attend. That includes food, snacks, coffee, and access to all workshops and mentorship sessions throughout the 48 hours.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What should I bring?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Your laptop and chargers, a valid student ID, any hardware or components you want to work with, a sleeping bag or blanket if you plan to stay overnight, and your best ideas. We&rsquo;ll handle the rest.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Do I need to be a CS or engineering major?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Not at all. Some of the best projects come from designers, business majors, artists, and social science students who bring a fresh perspective. Diversity of thought is what makes hackathons great.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Where is it held?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          KeanUHackThis 2027 will be held in the STEM Building at Kean University in Union, New Jersey. Exact room details will be shared with registered participants closer to the event.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What can I build?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Any software, hardware, or hybrid project that fits one of the four tracks (or the Open Innovation wildcard). Projects must be started at the event &mdash; no prior work. You can use open source libraries, APIs, and existing frameworks.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Will there be mentors and workshops?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes. Industry mentors will be on-site throughout the weekend for office hours and drop-in help. Optional workshop sessions on topics like API integration, ML basics, hardware prototyping, and pitching will also run during the event.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FOOTER
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="uploads/hackathon_logo2026.png" alt="KeanUHackThis" />
+        <span class="footer-logo-text">KeanUHackThis</span>
+      </div>
+      <p class="footer-tagline">
+        Kean University&rsquo;s flagship hackathon.<br>
+        48 hours. Every major. Build something real.
+      </p>
+    </div>
+
+    <div class="footer-links-group">
+      <div class="footer-link-col">
+        <span class="footer-link-head">Navigate</span>
+        <a href="#about">About</a>
+        <a href="#tracks">Tracks</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#prizes">Prizes</a>
+        <a href="#sponsors">Sponsors</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-link-col">
+        <span class="footer-link-head">Contact</span>
+        <a href="mailto:acmkeanchapter@kean.edu">acmkeanchapter@kean.edu</a>
+        <a href="https://www.kean.edu/" target="_blank" rel="noopener">Kean University</a>
+        <a href="register.html">Register Now</a>
+        <a href="mailto:acmkeanchapter@kean.edu">Sponsor Packet</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy mono">&copy; 2027 KeanUHackThis &middot; Kean University, Union NJ</span>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/keanuniversity/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="https://x.com/KeanUniversity" target="_blank" rel="noopener" aria-label="X">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/school/kean-university/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- =====================================================================
+     SCRIPTS
+     ===================================================================== -->
+<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+<script>
+(function () {
+"use strict";
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+/* ── Smooth nav anchor links ── */
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener("click", function(e) {
+    var target = document.querySelector(this.getAttribute("href"));
+    if (!target) return;
+    e.preventDefault();
+    gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 64 }, ease: "power3.inOut" });
+    var mob = document.getElementById("nav-mobile");
+    if (mob.classList.contains("open")) {
+      mob.classList.remove("open");
+      document.getElementById("nav-burger").classList.remove("open");
+    }
+  });
+});
+
+/* ── Burger menu ── */
+var burger = document.getElementById("nav-burger");
+var mobNav = document.getElementById("nav-mobile");
+burger.addEventListener("click", function() {
+  burger.classList.toggle("open");
+  mobNav.classList.toggle("open");
+});
+
+/* ── Nav scroll state + auto-hide on scroll down ── */
+var nav = document.getElementById("site-nav");
+ScrollTrigger.create({
+  start: "top -60",
+  onUpdate: function(self) { nav.classList.toggle("scrolled", self.progress > 0); }
+});
+(function() {
+  var lastY = 0;
+  var heroH = window.innerHeight;
+  window.addEventListener("scroll", function() {
+    var y = window.scrollY;
+    /* Only auto-hide past the hero section */
+    if (y > heroH * 0.6) {
+      nav.classList.toggle("nav-hidden", y > lastY);
+    } else {
+      nav.classList.remove("nav-hidden");
+    }
+    lastY = y;
+  }, { passive: true });
+}());
+
+/* ── Scroll progress bar ── */
+var bar = document.getElementById("progress-bar");
+ScrollTrigger.create({
+  start: "top top",
+  end: "bottom bottom",
+  onUpdate: function(self) { bar.style.width = (self.progress * 100) + "%"; }
+});
+
+/* ── Hero load-in: staggered fade-up (no curtain, just clean parallax) ── */
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.1 });
+
+  tl.fromTo("#hero-logo-wrap",
+    { opacity: 0, y: 40, scale: 0.96 },
+    { opacity: 1, y: 0,  scale: 1, duration: 1.1 }
+  )
+  .fromTo("#hero-eyebrow",
+    { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, "-=0.7"
+  )
+  .fromTo(["#hline1","#hline2","#hline3"],
+    { opacity: 0, y: 32 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 }, "-=0.5"
+  )
+  .fromTo("#hero-stats",
+    { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55 }, "-=0.35"
+  )
+  .fromTo("#hero-cta",
+    { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, "-=0.4"
+  )
+  .fromTo(["#hero-scroll-hint","#hero-status",".hero-corner"],
+    { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.06 }, "-=0.3"
+  );
+}());
+
+/* ── Hero mouse parallax ── */
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var qLogoX = gsap.quickTo("#hero-logo-wrap",  "x", { duration: 1.4, ease: "power2.out" });
+  var qLogoY = gsap.quickTo("#hero-logo-wrap",  "y", { duration: 1.4, ease: "power2.out" });
+  var qCopyX = gsap.quickTo("#hero-copy-panel", "x", { duration: 1.8, ease: "power2.out" });
+  var qCopyY = gsap.quickTo("#hero-copy-panel", "y", { duration: 1.8, ease: "power2.out" });
+  window.addEventListener("mousemove", function (e) {
+    if (window.scrollY > window.innerHeight * 0.3) return;
+    var rx = e.clientX / window.innerWidth  - 0.5;
+    var ry = e.clientY / window.innerHeight - 0.5;
+    qLogoX(rx * 18); qLogoY(ry * 11);
+    qCopyX(rx * -9); qCopyY(ry * -5);
+  });
+  window.addEventListener("mouseleave", function () {
+    qLogoX(0); qLogoY(0); qCopyX(0); qCopyY(0);
+  });
+}());
+
+/* ── Hero scroll parallax exit ── */
+gsap.to(".hero-inner", {
+  y: -60, opacity: 0,
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#hero",
+    start: "top top",
+    end: "bottom top",
+    scrub: 1.2,
+  }
+});
+gsap.to("#hero-aurora", {
+  yPercent: 30, opacity: 0,
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#hero",
+    start: "top top",
+    end: "bottom top",
+    scrub: 1.8,
+  }
+});
+
+/* ── Section headline parallax ── */
+gsap.utils.toArray(".parallax-headline").forEach(function(el) {
+  gsap.to(el, {
+    yPercent: -12, ease: "none",
+    scrollTrigger: {
+      trigger: el.closest("section"),
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1.8
+    }
+  });
+});
+
+/* ── Stagger reveal for .reveal elements ── */
+gsap.utils.toArray(".reveal").forEach(function(el, i) {
+  gsap.fromTo(el,
+    { opacity: 0, y: 48 },
+    {
+      opacity: 1, y: 0,
+      duration: 0.85,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 88%",
+        once: true
+      },
+      delay: (i % 4) * 0.08
+    }
+  );
+});
+
+/* ── Tracks card stagger ── */
+gsap.utils.toArray(".track-card").forEach(function(card, i) {
+  gsap.fromTo(card,
+    { opacity: 0, y: 60 },
+    {
+      opacity: 1, y: 0,
+      duration: 0.9, ease: "power3.out",
+      delay: i * 0.12,
+      scrollTrigger: { trigger: ".tracks-grid", start: "top 80%", once: true }
+    }
+  );
+});
+
+/* ── Schedule day stagger ── */
+gsap.utils.toArray(".schedule-day").forEach(function(day, i) {
+  gsap.fromTo(day,
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1, y: 0,
+      duration: 0.85, ease: "power3.out",
+      delay: i * 0.15,
+      scrollTrigger: { trigger: ".schedule-days", start: "top 82%", once: true }
+    }
+  );
+});
+
+/* ── About logo watermark parallax ── */
+gsap.to(".about-logo-watermark", {
+  yPercent: 20, ease: "none",
+  scrollTrigger: {
+    trigger: "#about",
+    start: "top bottom", end: "bottom top",
+    scrub: 2
+  }
+});
+
+/* ── FAQ accordion ── */
+document.querySelectorAll(".faq-question").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    var item = btn.closest(".faq-item");
+    var answer = item.querySelector(".faq-answer");
+    var isOpen = item.classList.contains("open");
+
+    // Close all
+    document.querySelectorAll(".faq-item.open").forEach(function(openItem) {
+      openItem.classList.remove("open");
+      gsap.to(openItem.querySelector(".faq-answer"), { height: 0, duration: 0.35, ease: "power2.inOut" });
+    });
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add("open");
+      gsap.set(answer, { height: "auto" });
+      var h = answer.offsetHeight;
+      gsap.fromTo(answer, { height: 0 }, { height: h, duration: 0.4, ease: "power2.out" });
+    }
+  });
+});
+
+/* ── Countdown removed from index hero (lives on coming-soon.html) ── */
+
+
+/* ── Particle field ── */
+(function() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var canvas = document.getElementById("hero-canvas");
+  var ctx = canvas.getContext("2d");
+  var W = 0, H = 0, dpr = 1, pts = [], mx = -9999, my = -9999, t = 0;
+
+  function resize() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    canvas.style.width = W + "px"; canvas.style.height = H + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+  }
+  function seed() {
+    var n = Math.max(80, Math.min(180, Math.floor(W * H / 9000)));
+    pts = [];
+    for (var i = 0; i < n; i++) {
+      pts.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.16, vy: (Math.random() - 0.5) * 0.16,
+        r: Math.random() * 1.2 + 0.25, l: Math.random() * 0.6 + 0.3,
+        ph: Math.random() * Math.PI * 2, type: Math.random() > 0.5 ? 0 : 1
+      });
+    }
+  }
+  function frame() {
+    t += 0.006;
+    ctx.clearRect(0, 0, W, H);
+    var D = Math.min(160, Math.max(100, W * 0.09)), D2 = D * D;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var fx = mx - p.x, fy = my - p.y, fd = fx * fx + fy * fy;
+      if (fd < 20000) { var f = (1 - fd / 20000) * 0.0005; p.vx += fx * f; p.vy += fy * f; }
+      p.vx *= 0.993; p.vy *= 0.993;
+      p.x += p.vx + Math.sin(t + p.ph) * 0.05;
+      p.y += p.vy + Math.cos(t * 0.65 + p.ph) * 0.05;
+      if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
+      if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
+      for (var j = i + 1; j < pts.length; j++) {
+        var q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d2 = dx * dx + dy * dy;
+        if (d2 < D2) {
+          var k = 1 - Math.sqrt(d2) / D, a = k * k * 0.38 * Math.min(p.l, q.l);
+          ctx.strokeStyle = (p.type === q.type)
+            ? (p.type === 0 ? "rgba(48,96,200," + a + ")" : "rgba(217,194,122," + (a * 0.7) + ")")
+            : "rgba(140,165,220," + (a * 0.40) + ")";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+        }
+      }
+      var pulse = 0.5 + 0.5 * (0.5 + 0.5 * Math.sin(t * 1.2 + p.ph));
+      ctx.fillStyle = p.type === 0
+        ? "rgba(48,96,200," + (p.l * 0.90 * pulse) + ")"
+        : "rgba(217,194,122," + (p.l * 0.75 * pulse) + ")";
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize", resize);
+  window.addEventListener("mousemove", function(e) { mx = e.clientX; my = e.clientY; });
+  window.addEventListener("mouseleave", function() { mx = -9999; my = -9999; });
+  resize(); frame();
+}());
+
+}());
+</script>
+
+</body>
+</html>
