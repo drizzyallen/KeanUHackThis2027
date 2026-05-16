@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { SCHOOLS, MAJORS } from '../utils/data';
 
-const APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const BACKEND_URL = "http://localhost:3001/api";
 
 export default function Register() {
   const [step, setStep] = useState(1);
@@ -169,10 +169,7 @@ export default function Register() {
     }
   };
 
-  async function sha256(str: string) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
-  }
+
 
   const generateLocalCode = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -190,8 +187,7 @@ export default function Register() {
     setSubmitError(false);
 
     try {
-      const passwordHash = await sha256(formData.password);
-      
+
       const dietKeys = Object.keys(formData.dietary).filter(k => formData.dietary[k as keyof typeof formData.dietary]);
       let dietaryStr = dietKeys.join(', ');
       if (formData.dietary.other && formData.dietaryOtherText) {
@@ -223,24 +219,21 @@ export default function Register() {
         hearAbout: formData.hearAbout,
         notes: formData.notes,
         photoConsent: formData.photoConsent ? "Yes" : "No",
-        passwordHash: passwordHash,
+        password: formData.password,
         submittedAt: new Date().toISOString(),
         confirmationCode: code
       };
 
-      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
-        setTimeout(() => {
-          handleSuccess(payload, code);
-        }, 1500);
-      } else {
-        await fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify(payload)
-        });
-        handleSuccess(payload, code);
+      const response = await fetch(`${BACKEND_URL}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || "Registration failed");
       }
+      handleSuccess(payload, code);
     } catch (e) {
       setLoading(false);
       setSubmitError(true);
@@ -321,6 +314,16 @@ export default function Register() {
                       </span>
                     </div>
                   ))}
+                </div>
+              )}
+
+              {!success && !loading && (
+                <div style={{ marginBottom: '24px', padding: '12px 16px', background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ fontSize: '13px', color: 'var(--warn)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <span>Already have an account?</span>
+                  </div>
+                  <Link to="/login" style={{ fontSize: '12px', fontWeight: 700, padding: '6px 12px', background: 'var(--warn)', color: '#000', borderRadius: '6px', textDecoration: 'none' }}>Or log in &rarr;</Link>
                 </div>
               )}
 
