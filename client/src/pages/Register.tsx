@@ -5,6 +5,17 @@ import { SCHOOLS, MAJORS } from '../utils/data';
 
 const BACKEND_URL = "http://localhost:3001/api";
 
+const DIETARY_LABELS: Record<string, string> = {
+  none: "None / No restrictions",
+  vegetarian: "Vegetarian",
+  vegan: "Vegan",
+  halal: "Halal",
+  kosher: "Kosher",
+  glutenFree: "Gluten-Free",
+  nutAllergy: "Nut Allergy",
+  other: "Other",
+};
+
 export default function Register() {
   const [step, setStep] = useState(1);
   const totalSteps = 4;
@@ -12,7 +23,7 @@ export default function Register() {
   const [formData, setFormData] = useState({
     email: '', firstName: '', lastName: '', password: '', confirmPassword: '',
     phone: '', age: '', gender: 'Male', school: '', major: '', year: 'Freshman', level: 'Undergraduate',
-    teamStatus: 'Solo', teamName: '', teammate1: '', teammate2: '', teammate3: '',
+    teamStatus: 'Solo', teamName: '', selectedTeamId: '',
     track: 'Track 01', tshirt: 'M',
     dietary: { none: true, vegetarian: false, vegan: false, halal: false, kosher: false, glutenFree: false, nutAllergy: false, other: false },
     dietaryOtherText: '',
@@ -23,7 +34,10 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(false);
-  const [confirmationCode, setConfirmationCode] = useState('');
+  const [submitErrorMessage, setSubmitErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [teams, setTeams] = useState<any[]>([]);
 
   // Autocomplete states
   const [schoolMatches, setSchoolMatches] = useState<any[]>([]);
@@ -57,6 +71,17 @@ export default function Register() {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (formData.teamStatus !== 'Join a Team') return;
+
+    fetch(`${BACKEND_URL}/teams`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) setTeams(data.teams || []);
+      })
+      .catch(() => setTeams([]));
+  }, [formData.teamStatus]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value, type } = e.target;
@@ -133,8 +158,11 @@ export default function Register() {
       if (!formData.school.trim()) errs.school = "Required";
       if (!formData.major.trim()) errs.major = "Required";
     } else if (s === 3) {
-      if (formData.teamStatus === 'Create a Team' || formData.teamStatus === 'Join a Team') {
+      if (formData.teamStatus === 'Create a Team') {
         if (!formData.teamName.trim()) errs.teamName = "Required";
+      }
+      if (formData.teamStatus === 'Join a Team' && !formData.selectedTeamId) {
+        errs.selectedTeamId = "Required";
       }
     } else if (s === 4) {
       if (!formData.photoConsent) errs.photoConsent = "Required";
@@ -169,91 +197,111 @@ export default function Register() {
     }
   };
 
-
-
-  const generateLocalCode = () => {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    let code = "KUH-";
-    for (let i = 0; i < 6; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
-  };
-
   const handleSubmit = async () => {
     if (!validateStep(4)) return;
     
     setLoading(true);
     setSubmitError(false);
+    setSubmitErrorMessage('');
 
     try {
 
       const dietKeys = Object.keys(formData.dietary).filter(k => formData.dietary[k as keyof typeof formData.dietary]);
-      let dietaryStr = dietKeys.join(', ');
+      let dietaryStr = dietKeys
+        .filter(k => k !== 'other')
+        .map(k => DIETARY_LABELS[k] || k)
+        .join(', ');
       if (formData.dietary.other && formData.dietaryOtherText) {
-        dietaryStr += ` (Other: ${formData.dietaryOtherText})`;
+        dietaryStr += `${dietaryStr ? ', ' : ''}Other: ${formData.dietaryOtherText}`;
+      } else if (formData.dietary.other) {
+        dietaryStr += `${dietaryStr ? ', ' : ''}Other`;
       }
 
-      const hasTeam = formData.teamStatus === 'Create a Team' || formData.teamStatus === 'Join a Team';
-      const code = generateLocalCode();
-
-      const payload = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+      const signupPayload = {
         email: formData.email,
+        password: formData.password,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      };
+
+      const signupResponse = await fetch(`${BACKEND_URL}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signupPayload)
+      });
+
+      const signupData = await signupResponse.json();
+      if (!signupData.success || !signupData.session?.access_token) {
+        throw new Error(signupData.error || "Signup failed");
+      }
+
+      const registrationPayload = {
         phone: formData.phone,
         age: formData.age,
         gender: formData.gender,
-        school: formData.school,
+        college_university: formData.school,
         major: formData.major,
-        year: formData.year,
-        level: formData.level,
-        teamStatus: formData.teamStatus,
-        teamName: hasTeam ? formData.teamName : '',
-        teammate1: hasTeam ? formData.teammate1 : '',
-        teammate2: hasTeam ? formData.teammate2 : '',
-        teammate3: hasTeam ? formData.teammate3 : '',
-        track: formData.track,
-        tshirt: formData.tshirt,
-        dietary: dietaryStr,
-        hearAbout: formData.hearAbout,
-        notes: formData.notes,
-        photoConsent: formData.photoConsent ? "Yes" : "No",
-        password: formData.password,
-        submittedAt: new Date().toISOString(),
-        confirmationCode: code
+        year_of_study: formData.year,
+        level_of_study: formData.level,
+        team_status: formData.teamStatus,
+        team_name: formData.teamStatus === 'Create a Team' ? formData.teamName : undefined,
+        team_id: formData.teamStatus === 'Join a Team' ? formData.selectedTeamId : undefined,
+        intended_track: formData.track,
+        tshirt_size: formData.tshirt,
+        dietary_restrictions: dietaryStr,
+        referral_source: formData.hearAbout,
+        additional_info: formData.notes,
+        terms_accepted: formData.photoConsent,
       };
 
-      const response = await fetch(`${BACKEND_URL}/register`, {
+      const registrationResponse = await fetch(`${BACKEND_URL}/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${signupData.session.access_token}`,
+        },
+        body: JSON.stringify(registrationPayload)
       });
-      const data = await response.json();
-      if (!data.success) {
-        throw new Error(data.error || "Registration failed");
+
+      const registrationData = await registrationResponse.json();
+      if (!registrationData.success) {
+        throw new Error(registrationData.error || "Registration failed");
       }
-      handleSuccess(payload, code);
+
+      handleSuccess({
+        email: signupData.user.email,
+        firstName: signupData.user.first_name,
+        lastName: signupData.user.last_name,
+        teamStatus: formData.teamStatus,
+        userId: signupData.user.id,
+        accessToken: signupData.session.access_token,
+        expiresAt: signupData.session.expires_at ? signupData.session.expires_at * 1000 : Date.now() + (7 * 24 * 60 * 60 * 1000),
+        registrationId: registrationData.registration.id,
+        team: registrationData.team,
+      });
     } catch (e) {
+      const message = e instanceof Error ? e.message : "Registration failed";
+      console.error("[Register] Submit failed:", e);
       setLoading(false);
       setSubmitError(true);
+      setSubmitErrorMessage(message);
     }
   };
 
-  const handleSuccess = (payload: any, code: string) => {
+  const handleSuccess = (payload: any) => {
     const session = {
       email: payload.email,
       firstName: payload.firstName,
       lastName: payload.lastName,
-      confirmationCode: code,
       teamStatus: payload.teamStatus,
       status: "Registered",
-      token: "",
-      expiresAt: Date.now() + (7 * 24 * 60 * 60 * 1000)
+      token: payload.accessToken,
+      userId: payload.userId,
+      registrationId: payload.registrationId,
+      expiresAt: payload.expiresAt || Date.now() + (7 * 24 * 60 * 60 * 1000)
     };
     localStorage.setItem("kuh_session", JSON.stringify(session));
     
-    setConfirmationCode(code);
     setLoading(false);
     setSuccess(true);
     
@@ -347,12 +395,8 @@ export default function Register() {
                   <div>
                     <h3 className="success-title">You're in.</h3>
                     <p className="success-sub">
-                      Your application has been received. Save your confirmation code below — you'll need it to check in at the event.
+                      Your account and registration have been saved. You can view your dashboard any time with the email and password you just created.
                     </p>
-                  </div>
-                  <div className="conf-code-box">
-                    <div className="conf-code-label">Confirmation Code</div>
-                    <div className="conf-code" id="conf-code-display">{confirmationCode}</div>
                   </div>
                   <div style={{ marginTop: '12px', display: 'flex', gap: '12px' }}>
                     <Link to="/" className="btn-back">Back to Home</Link>
@@ -363,7 +407,7 @@ export default function Register() {
 
               {submitError && !loading && !success && (
                 <div id="submit-error" style={{ display: 'block' }}>
-                  <strong>Error saving registration.</strong> Please try again or contact support if the issue persists.
+                  <strong>Error saving registration.</strong> {submitErrorMessage || "Please try again or contact support if the issue persists."}
                 </div>
               )}
 
@@ -399,12 +443,22 @@ export default function Register() {
                     <div className="field-row">
                       <div className="field-group">
                         <label htmlFor="password">Password <span className="req">*</span></label>
-                        <input type="password" id="password" value={formData.password} onChange={handleChange} className={errors.password ? 'error' : ''} placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+                        <div className="password-input-wrap">
+                          <input type={showPassword ? "text" : "password"} id="password" value={formData.password} onChange={handleChange} className={errors.password ? 'error' : ''} placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+                          <button type="button" className="password-toggle" onClick={() => setShowPassword(prev => !prev)}>
+                            {showPassword ? "Hide" : "Show"}
+                          </button>
+                        </div>
                         {errors.password && <div className="field-error show">{errors.password}</div>}
                       </div>
                       <div className="field-group">
                         <label htmlFor="confirmPassword">Confirm Password <span className="req">*</span></label>
-                        <input type="password" id="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className={errors.confirmPassword ? 'error' : ''} placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+                        <div className="password-input-wrap">
+                          <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className={errors.confirmPassword ? 'error' : ''} placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+                          <button type="button" className="password-toggle" onClick={() => setShowConfirmPassword(prev => !prev)}>
+                            {showConfirmPassword ? "Hide" : "Show"}
+                          </button>
+                        </div>
                         {errors.confirmPassword && <div className="field-error show">{errors.confirmPassword}</div>}
                       </div>
                     </div>
@@ -479,7 +533,7 @@ export default function Register() {
 
                     <div className="field-row">
                       <div className="field-group">
-                        <label htmlFor="year">Graduation Year</label>
+                        <label htmlFor="year">Year of Study</label>
                         <select id="year" value={formData.year} onChange={handleChange}>
                           <option value="Freshman">Freshman</option>
                           <option value="Sophomore">Sophomore</option>
@@ -517,30 +571,31 @@ export default function Register() {
                       </select>
                     </div>
 
-                    {(formData.teamStatus === 'Create a Team' || formData.teamStatus === 'Join a Team') && (
+                    {formData.teamStatus === 'Create a Team' && (
                       <div className="team-fields visible">
                         <div className="field-group">
                           <label htmlFor="teamName">Team Name <span className="req">*</span></label>
                           <input type="text" id="teamName" value={formData.teamName} onChange={handleChange} className={errors.teamName ? 'error' : ''} placeholder="e.g. The Debuggers" />
                           {errors.teamName && <div className="field-error show">{errors.teamName}</div>}
-                          <div className="field-hint">Must match your teammates exactly</div>
+                          <div className="field-hint">You will be added as the first member automatically</div>
                         </div>
-                        {formData.teamStatus === 'Create a Team' && (
-                          <div className="team-mates">
-                            <div className="field-group">
-                              <label htmlFor="teammate1">Teammate 1 Email</label>
-                              <input type="email" id="teammate1" value={formData.teammate1} onChange={handleChange} placeholder="Optional" />
-                            </div>
-                            <div className="field-group">
-                              <label htmlFor="teammate2">Teammate 2 Email</label>
-                              <input type="email" id="teammate2" value={formData.teammate2} onChange={handleChange} placeholder="Optional" />
-                            </div>
-                            <div className="field-group">
-                              <label htmlFor="teammate3">Teammate 3 Email</label>
-                              <input type="email" id="teammate3" value={formData.teammate3} onChange={handleChange} placeholder="Optional" />
-                            </div>
-                          </div>
-                        )}
+                      </div>
+                    )}
+
+                    {formData.teamStatus === 'Join a Team' && (
+                      <div className="team-fields visible">
+                        <div className="field-group">
+                          <label htmlFor="selectedTeamId">Existing Team <span className="req">*</span></label>
+                          <select id="selectedTeamId" value={formData.selectedTeamId} onChange={handleChange} className={errors.selectedTeamId ? 'error' : ''}>
+                            <option value="">Select a team...</option>
+                            {teams.map(team => (
+                              <option key={team.id} value={team.id} disabled={team.isFull}>
+                                {team.teamName} — {team.creatorName} — Team #{team.id}{team.isFull ? ' — Full' : ` — ${team.memberCount}/${team.maxMembers}`}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.selectedTeamId && <div className="field-error show">{errors.selectedTeamId}</div>}
+                        </div>
                       </div>
                     )}
 

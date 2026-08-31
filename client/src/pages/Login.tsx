@@ -77,14 +77,15 @@ export default function Login() {
         data = JSON.parse(text);
       } catch (pe) {
         console.error("[Login] Non-JSON response:", text.slice(0, 300));
-        setErrorMsg("Server returned an unexpected response. Make sure the Apps Script is deployed correctly.");
+        setErrorMsg("Server returned an unexpected response. Make sure the Express server is running.");
         setLoading(false);
         return;
       }
 
       if (data.success) {
         const ttl = remember ? 7 * 24 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
-        const session = Object.assign({}, data.user, { token: data.token, expiresAt: Date.now() + ttl });
+        const expiresAt = remember ? Date.now() + ttl : data.expiresAt || Date.now() + ttl;
+        const session = Object.assign({}, data.user, { token: data.token, expiresAt });
         localStorage.setItem("kuh_session", JSON.stringify(session));
         navigate('/dashboard');
       } else {
