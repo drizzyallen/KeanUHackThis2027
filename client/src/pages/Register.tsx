@@ -371,7 +371,7 @@ export default function Register() {
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     <span>Already have an account?</span>
                   </div>
-                  <Link to="/login" style={{ fontSize: '12px', fontWeight: 700, padding: '6px 12px', background: 'var(--warn)', color: '#000', borderRadius: '6px', textDecoration: 'none' }}>Or log in &rarr;</Link>
+                  <Link to="/?login=1" style={{ fontSize: '12px', fontWeight: 700, padding: '6px 12px', background: 'var(--warn)', color: '#000', borderRadius: '6px', textDecoration: 'none' }}>Or log in &rarr;</Link>
                 </div>
               )}
 

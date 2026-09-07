@@ -101,7 +101,7 @@ export default function Dashboard() {
     } catch(e) {}
 
     if (!s || s.expiresAt <= Date.now()) {
-      navigate('/login');
+      navigate('/?login=1');
       return;
     }
 
@@ -112,7 +112,7 @@ export default function Dashboard() {
         if (!data.success) {
           if (data.error?.toLowerCase().includes("token")) {
             localStorage.removeItem("kuh_session");
-            navigate('/login');
+            navigate('/?login=1');
           } else {
             populateForm(s);
           }
@@ -604,7 +604,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("kuh_session");
-    navigate('/login');
+    navigate('/?login=1');
   };
 
   if (loading || !session) return null;
