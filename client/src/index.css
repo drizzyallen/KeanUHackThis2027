@@ -1456,16 +1456,13 @@ img {
 .site-footer {
   background: #030812;
   border-top: 1px solid var(--border);
-  padding: clamp(48px, 7vh, 80px) clamp(24px, 7vw, 110px) clamp(28px, 4vh, 48px);
+  padding: clamp(36px, 5vh, 56px) clamp(24px, 7vw, 110px);
 }
 
 .footer-top {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 40px;
-  padding-bottom: clamp(32px, 5vh, 56px);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: clamp(24px, 4vh, 40px);
   align-items: start;
 }
 
@@ -1566,6 +1563,7 @@ img {
   letter-spacing: 0;
   font-weight: 700;
   color: rgba(237, 244, 255, 0.7);
+  margin-top: 4px;
 }
 
 .footer-socials {

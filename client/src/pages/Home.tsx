@@ -691,23 +691,11 @@ export default function Home() {
 
               <div className="footer-links-group">
                 <div className="footer-link-col">
-                  <span className="footer-link-head">Navigate</span>
-                  <a href="#about">About</a>
-                  <a href="#sponsors">Sponsors</a>
-                  <a href="#schedule">Schedule</a>
-                  <a href="#faq">FAQ</a>
-                </div>
-                <div className="footer-link-col">
                   <span className="footer-link-head">Contact</span>
                   <a href="mailto:acmkeanchapter@kean.edu">acmkeanchapter@kean.edu</a>
-                  <Link to="/register">Register Now</Link>
-                  <a href="https://plastic-samba-cc3.notion.site/366c3ff7cd3180f6bbf8d02cb99c4532" target="_blank" rel="noopener noreferrer">Sponsor Packet</a>
+                  <span className="footer-copy">&copy; 2027 Kean University, Union NJ</span>
                 </div>
               </div>
-            </div>
-
-            <div className="footer-bottom">
-              <span className="footer-copy">&copy; 2027 Kean University, Union NJ</span>
             </div>
           </footer>
         </div>
