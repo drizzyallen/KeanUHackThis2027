@@ -260,11 +260,36 @@
 /* Nav additions for dashboard */
 .nav-right { display: flex; align-items: center; gap: 16px; }
 .nav-greeting { font-family: "Plus Jakarta Sans", "Inter", sans-serif; font-size: 13px; letter-spacing: 0; font-weight: 800; color: var(--badge-lt); }
-.nav-logout { font-family: "Plus Jakarta Sans", "Inter", sans-serif; font-size: 13px; letter-spacing: 0; font-weight: 800; color: var(--dim); transition: color 0.2s; background: none; padding: 0; cursor: pointer; }
-.nav-logout:hover { color: var(--error); }
+.nav-logout {
+  min-height: 40px;
+  padding: 0 20px;
+  border: 3px solid #073247;
+  border-radius: 999px;
+  background: #fff8ea;
+  box-shadow: 4px 5px 0 rgba(0, 74, 88, 0.72);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Plus Jakarta Sans", "Baloo 2", "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0;
+  font-weight: 900;
+  color: #073247;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+.nav-logout:hover {
+  background: #ffffff;
+  color: #073247;
+  transform: translate(-1px, -2px);
+  box-shadow: 5px 7px 0 rgba(0, 74, 88, 0.72);
+}
 
 /* Responsive */
 @media (max-width: 700px) {
+  .nav-right { gap: 10px; }
+  .nav-greeting { display: none; }
   .edit-grid { grid-template-columns: 1fr; }
   .info-grid { grid-template-columns: 1fr 1fr; }
   .dietary-grid { grid-template-columns: 1fr; }

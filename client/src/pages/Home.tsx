@@ -4,9 +4,11 @@ import Lenis from 'lenis';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
-import aboutPageImage from '../../uploads/aboutPageImage.jpeg';
+import deptCsLogo from '../../uploads/KeanCSDep.png';
+import keanULogo from '../../uploads/KeanU.png';
 import mongoDbLogo from '../../uploads/MongoDB_ForestGreen.png';
 import tinComputerLogo from '../../uploads/TinComputer.png';
+import KeanClockParallax from '../components/KeanClockParallax';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -33,6 +35,18 @@ const sponsorLogos = [
   { name: "Tin Computer", src: tinComputerLogo, glow: true },
 ];
 const sponsorLogoSlides = [...sponsorLogos, ...sponsorLogos, ...sponsorLogos, ...sponsorLogos];
+
+const getDocumentTop = (element: HTMLElement) => {
+  let top = 0;
+  let node: HTMLElement | null = element;
+
+  while (node) {
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+
+  return top;
+};
 
 export default function Home() {
   const navigate = useNavigate();
@@ -75,6 +89,31 @@ export default function Home() {
     const anchors = document.querySelectorAll('a[href^="#"]');
     const anchorCleanups: Array<() => void> = [];
 
+    const getAnchorScrollY = (target: HTMLElement) => {
+      const navHeight = navRef.current?.offsetHeight ?? 78;
+      const targetTop = getDocumentTop(target);
+      const sceneEl = document.querySelector(".hero-scroll-stage") as HTMLElement | null;
+      const foregroundLayer = document.querySelector(".foreground-layer") as HTMLElement | null;
+      const wallEl = document.querySelector(".blue-wall") as HTMLElement | null;
+      const navOffset = navHeight + 10;
+
+      if (!reducedMotion && sceneEl && foregroundLayer?.contains(target) && wallEl) {
+        const scrollEnd = Math.max(1, sceneEl.offsetHeight - window.innerHeight);
+        const startY = window.innerHeight * 1.12;
+        const endY = -(wallEl.offsetHeight + 2);
+        const slope = (endY - startY) / scrollEnd;
+        const revealDestination = (targetTop + startY - navOffset) / (1 - slope);
+
+        if (revealDestination <= scrollEnd) {
+          return Math.max(0, revealDestination);
+        }
+
+        return Math.max(0, targetTop + endY - navOffset);
+      }
+
+      return Math.max(0, targetTop - navOffset);
+    };
+
     anchors.forEach(anchor => {
       const handleClick = (event: Event) => {
         const targetId = anchor.getAttribute("href");
@@ -84,12 +123,13 @@ export default function Home() {
         if (!target) return;
 
         event.preventDefault();
+        const scrollY = getAnchorScrollY(target as HTMLElement);
         if (lenis) {
-          lenis.scrollTo(target as HTMLElement, { offset: -72, duration: 1.15 });
+          lenis.scrollTo(scrollY, { duration: 1.15 });
         } else {
           gsap.to(window, {
             duration: reducedMotion ? 0 : 0.85,
-            scrollTo: { y: target, offsetY: 72, autoKill: false },
+            scrollTo: { y: scrollY, autoKill: false },
             ease: "power2.inOut",
           });
         }
@@ -129,7 +169,7 @@ export default function Home() {
 
       if (sceneEl && stickyEl && foregroundLayer && wallEl && buildingCrop && aboutEl) {
         gsap.set(foregroundLayer, { y: "112vh" });
-        gsap.set(".hero-content", { y: 0, opacity: 1 });
+        gsap.set(".hero-content", { opacity: 1 });
         gsap.set(buildingCrop, { y: 0, scale: 1 });
         aboutEl.style.setProperty("--about-solid", "1");
 
@@ -162,7 +202,7 @@ export default function Home() {
           .to(".cloud-drift-b", { x: 120, y: -54, ease: "none" }, 0)
           .to(".cloud-drift-c", { x: -70, y: -24, ease: "none" }, 0)
           .to(".cloud-drift-d", { x: 62, y: -42, ease: "none" }, 0)
-          .to(buildingCrop, { y: "-5vh", scale: 1.03, ease: "none" }, 0)
+          .to(buildingCrop, { y: "-2vh", scale: 1.01, ease: "none" }, 0)
           .to(foregroundLayer, { y: () => -(wallEl.offsetHeight + 2), ease: "none" }, 0);
 
         const handleResize = () => ScrollTrigger.refresh();
@@ -243,14 +283,6 @@ export default function Home() {
       localStorage.removeItem("kuh_session");
     }
   }, [loginMode, navigate]);
-
-  const openHeroLogin = () => {
-    setLoginMode(true);
-    setErrorMsg('');
-    setEmailError(false);
-    setPasswordError(false);
-    navigate('/?login=1', { replace: true });
-  };
 
   const closeHeroLogin = () => {
     setLoginMode(false);
@@ -362,6 +394,11 @@ export default function Home() {
           <li><a href="#sponsors">Sponsors</a></li>
           <li><a href="#schedule">Schedule</a></li>
           <li><a href="#faq">FAQ</a></li>
+          <li>
+            <a href="https://keanuhackthis-ten.vercel.app/" target="_blank" rel="noopener noreferrer">
+              KeanUHackThis2026
+            </a>
+          </li>
         </ul>
         <button className="nav-burger" id="nav-burger" aria-label="Menu" ref={burgerRef} onClick={toggleMenu}>
           <span></span>
@@ -375,6 +412,14 @@ export default function Home() {
         <a href="#sponsors" onClick={() => mobNavRef.current?.classList.remove("open")}>Sponsors</a>
         <a href="#schedule" onClick={() => mobNavRef.current?.classList.remove("open")}>Schedule</a>
         <a href="#faq" onClick={() => mobNavRef.current?.classList.remove("open")}>FAQ</a>
+        <a
+          href="https://keanuhackthis-ten.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => mobNavRef.current?.classList.remove("open")}
+        >
+          KeanUHackThis2026
+        </a>
       </nav>
 
       <section id="glab-home" className="hero-scroll-stage" aria-label="KeanUHackThis 2027">
@@ -390,6 +435,37 @@ export default function Home() {
             <span className="hero-cloud cloud-drift-c"></span>
             <span className="hero-cloud cloud-drift-d"></span>
             <span className="hero-cloud cloud-drift-e"></span>
+          </div>
+
+          <div className="hero-wildlife" aria-hidden="true">
+            <div className="hero-bird bird-1">
+              <div className="bird-bob">
+                <svg className="bird-icon" viewBox="0 0 32 16">
+                  <path className="bird-wing" d="M10 6 C12 -1 19 -3 24 1.5 C20 0.5 14 2.5 11 6.5 Z" fill="#0a0a0a" />
+                  <path className="bird-body" d="M1 8 C2 5.5 5 4.3 9 4.6 C14 5 19 6.4 24 7.4 C27 8 29.5 8 31 8 C29.5 8 27 8 24 8.6 C19 9.6 14 11 9 11.4 C5 11.7 2 10.5 1 8 Z" fill="#0a0a0a" />
+                </svg>
+              </div>
+            </div>
+            <div className="hero-bird bird-2">
+              <div className="bird-bob">
+                <svg className="bird-icon" viewBox="0 0 32 16">
+                  <path className="bird-wing" d="M10 6 C12 -1 19 -3 24 1.5 C20 0.5 14 2.5 11 6.5 Z" fill="#0a0a0a" />
+                  <path className="bird-body" d="M1 8 C2 5.5 5 4.3 9 4.6 C14 5 19 6.4 24 7.4 C27 8 29.5 8 31 8 C29.5 8 27 8 24 8.6 C19 9.6 14 11 9 11.4 C5 11.7 2 10.5 1 8 Z" fill="#0a0a0a" />
+                </svg>
+              </div>
+            </div>
+            <div className="hero-bird bird-3">
+              <div className="bird-bob">
+                <svg className="bird-icon" viewBox="0 0 32 16">
+                  <path className="bird-wing" d="M10 6 C12 -1 19 -3 24 1.5 C20 0.5 14 2.5 11 6.5 Z" fill="#0a0a0a" />
+                  <path className="bird-body" d="M1 8 C2 5.5 5 4.3 9 4.6 C14 5 19 6.4 24 7.4 C27 8 29.5 8 31 8 C29.5 8 27 8 24 8.6 C19 9.6 14 11 9 11.4 C5 11.7 2 10.5 1 8 Z" fill="#0a0a0a" />
+                </svg>
+              </div>
+            </div>
+
+            <span className="hero-leaf leaf-1"></span>
+            <span className="hero-leaf leaf-2"></span>
+            <span className="hero-leaf leaf-3"></span>
           </div>
 
           <div className="glab-building-crop">
@@ -487,9 +563,13 @@ export default function Home() {
                   <span>KeanUHackThis</span>
                   <strong>2027</strong>
                 </h1>
+                <div className="home-waitlist-fields" aria-label="Waitlist information">
+                  <input type="text" name="waitlist-name" placeholder="Full name" autoComplete="name" />
+                  <input type="email" name="waitlist-email" placeholder="Email address" autoComplete="email" />
+                </div>
                 <div className="home-hero-actions" aria-label="Primary actions">
                   <Link to="/register" className="hero-btn hero-btn-primary">
-                    Register now <span aria-hidden="true">&rarr;</span>
+                    Join waitlist <span aria-hidden="true">&rarr;</span>
                   </Link>
                   <a
                     href="https://keanuhackthis2027.vercel.app/"
@@ -499,9 +579,6 @@ export default function Home() {
                   >
                     Sponsor us
                   </a>
-                  <button type="button" className="hero-btn hero-btn-tertiary" onClick={openHeroLogin}>
-                    Log in
-                  </button>
                 </div>
               </>
             )}
@@ -533,6 +610,12 @@ export default function Home() {
         </div>
 
         <section id="about" className="section section-alt home-info-section about-underground">
+          <div className="about-gallery-panel reveal">
+            <React.Suspense fallback={null}>
+              <SphereGallery variant="theater" />
+            </React.Suspense>
+          </div>
+
           <div className="about-feature">
             <div className="about-copy reveal">
               <h2 className="headline">About <span>KeanUHackThis</span></h2>
@@ -551,11 +634,6 @@ export default function Home() {
                 code, and collaborate.
               </p>
             </div>
-
-            <figure className="about-photo-card reveal">
-              <img src={aboutPageImage} alt="KeanUHackThis participants gathered during the event" />
-              <figcaption>Closing ceremony at KeanUHackThis</figcaption>
-            </figure>
           </div>
 
           <div className="about-bottom-row reveal">
@@ -578,128 +656,129 @@ export default function Home() {
               <span>Kean University · Union, NJ</span>
             </div>
           </div>
-          <div id="sponsors" className="about-sponsors reveal">
-            <div className="sponsors-heading-row">
-              <h2 className="headline">Sponsors</h2>
-              <a
-                href="https://keanuhackthis2027.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hero-btn hero-btn-secondary sponsors-heading-btn"
-              >
-                Sponsor us
-              </a>
+        </section>
+
+        <KeanClockParallax>
+          <div className="kean-clock-sponsors-inset">
+            <div id="sponsors" className="about-sponsors reveal">
+              <div className="sponsors-heading-row">
+                <h2 className="headline">Sponsors</h2>
+                <a
+                  href="https://keanuhackthis2027.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-btn hero-btn-secondary sponsors-heading-btn"
+                >
+                  Sponsor us
+                </a>
+              </div>
+              <div className="logo-carousel" aria-label="KeanUHackThis sponsors">
+                <div className="logo-slider-viewport">
+                  <div className="logo-track scroll-right">
+                    {sponsorLogoSlides.map((sponsor, index) => (
+                      <a
+                        className="slide sponsor-logo-slide"
+                        data-glow={sponsor.glow ? "light" : undefined}
+                        href="#sponsors"
+                        aria-label={sponsor.name}
+                        key={`${sponsor.name}-${index}`}
+                      >
+                        <img src={sponsor.src} alt={sponsor.name} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="logo-carousel" aria-label="KeanUHackThis sponsors">
-              <div className="logo-slider-viewport">
-                <div className="logo-track scroll-right">
-                  {sponsorLogoSlides.map((sponsor, index) => (
-                    <a
-                      className="slide sponsor-logo-slide"
-                      data-glow={sponsor.glow ? "light" : undefined}
-                      href="#sponsors"
-                      aria-label={sponsor.name}
-                      key={`${sponsor.name}-${index}`}
-                    >
-                      <img src={sponsor.src} alt={sponsor.name} />
-                    </a>
-                  ))}
+          </div>
+
+          <main className="underworld lower-world">
+            <div className="underworld-content">
+              <section id="schedule" className="section section-alt home-info-section schedule-coming-soon">
+                <h2 className="headline reveal">Schedule</h2>
+                <div className="schedule-placeholder reveal">
+                  <p>Coming soon</p>
+                </div>
+              </section>
+            </div>
+          </main>
+        </KeanClockParallax>
+
+        <section id="faq" className="section home-info-section faq-solid-bg">
+          <h2 className="headline reveal">FAQs</h2>
+          <div className="faq-list">
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                Who can participate?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  Any currently enrolled undergraduate or graduate student aged 18+ can participate.
+                </div>
+              </div>
+            </div>
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                Do I need a team?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  No. You can arrive solo and form a team during the event.
+                </div>
+              </div>
+            </div>
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                How much does it cost?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  It is free to attend, including food, workshops, and mentorship.
+                </div>
+              </div>
+            </div>
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                Where is it held?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  The event is hosted at Kean University in Union, New Jersey.
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-      <main className="underworld lower-world">
-        <div className="underworld-content">
-          <section id="schedule" className="section section-alt home-info-section schedule-coming-soon">
-            <h2 className="headline reveal">Schedule</h2>
-            <div className="schedule-placeholder reveal">
-              <p>Coming soon</p>
+        <footer className="site-footer">
+          <div className="footer-top">
+            <div className="footer-brand">
+              <div className="footer-address-title">Kean University</div>
+              <p className="footer-tagline">
+                1000 Morris Ave<br />
+                Union, NJ 07083
+              </p>
+              <a className="footer-brand-link" href="https://www.kean.edu/" target="_blank" rel="noopener noreferrer">kean.edu</a>
             </div>
-          </section>
 
-          <section id="faq" className="section home-info-section">
-            <h2 className="headline reveal">FAQs</h2>
-            <div className="faq-list">
-              <div className="faq-item glass-panel">
-                <button className="faq-question" onClick={toggleFaq}>
-                  Who can participate?
-                  <span className="faq-icon">+</span>
-                </button>
-                <div className="faq-answer">
-                  <div className="faq-answer-inner">
-                    Any currently enrolled undergraduate or graduate student aged 18+ can participate.
-                  </div>
-                </div>
-              </div>
-              <div className="faq-item glass-panel">
-                <button className="faq-question" onClick={toggleFaq}>
-                  Do I need a team?
-                  <span className="faq-icon">+</span>
-                </button>
-                <div className="faq-answer">
-                  <div className="faq-answer-inner">
-                    No. You can arrive solo and form a team during the event.
-                  </div>
-                </div>
-              </div>
-              <div className="faq-item glass-panel">
-                <button className="faq-question" onClick={toggleFaq}>
-                  How much does it cost?
-                  <span className="faq-icon">+</span>
-                </button>
-                <div className="faq-answer">
-                  <div className="faq-answer-inner">
-                    It is free to attend, including food, workshops, and mentorship.
-                  </div>
-                </div>
-              </div>
-              <div className="faq-item glass-panel">
-                <button className="faq-question" onClick={toggleFaq}>
-                  Where is it held?
-                  <span className="faq-icon">+</span>
-                </button>
-                <div className="faq-answer">
-                  <div className="faq-answer-inner">
-                    The event is hosted at Kean University in Union, New Jersey.
-                  </div>
-                </div>
-              </div>
+            <div className="footer-logo-stack" aria-label="Kean University and Department of Computer Science">
+              <img src={keanULogo} alt="Kean University logo" />
+              <img src={deptCsLogo} alt="Kean University Department of Computer Science logo" />
             </div>
-            <div className="faq-gallery-heading reveal">
-              <h3 className="headline">Previous KeanUHackThis <span>Highlights</span></h3>
-            </div>
-            <div className="faq-gallery reveal">
-              <React.Suspense fallback={null}>
-                <SphereGallery />
-              </React.Suspense>
-              <p className="gallery-caveat">Click side images to view more.</p>
-            </div>
-          </section>
 
-          <footer className="site-footer">
-            <div className="footer-top">
-              <div className="footer-brand">
-                <div className="footer-address-title">Kean University</div>
-                <p className="footer-tagline">
-                  1000 Morris Ave<br />
-                  Union, NJ 07083
-                </p>
-                <a className="footer-brand-link" href="https://www.kean.edu/" target="_blank" rel="noopener noreferrer">kean.edu</a>
-              </div>
-
-              <div className="footer-links-group">
-                <div className="footer-link-col">
-                  <span className="footer-link-head">Contact</span>
-                  <a href="mailto:acmkeanchapter@kean.edu">acmkeanchapter@kean.edu</a>
-                  <span className="footer-copy">&copy; 2027 Kean University, Union NJ</span>
-                </div>
+            <div className="footer-links-group">
+              <div className="footer-link-col">
+                <span className="footer-link-head">Contact</span>
+                <a href="mailto:acmkeanchapter@kean.edu">acmkeanchapter@kean.edu</a>
+                <span className="footer-copy">&copy; 2027 Kean University, Union NJ</span>
               </div>
             </div>
-          </footer>
-        </div>
-      </main>
+          </div>
+        </footer>
       </div>
     </main>
   );

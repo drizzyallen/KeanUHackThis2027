@@ -615,7 +615,7 @@ export default function Dashboard() {
   const isCreatorOwnTeam = (team: any) => Boolean(teamInfo?.isCreator && team.id === teamInfo.id);
 
   return (
-    <div className="page-wrap" style={{ paddingTop: '64px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="page-wrap" style={{ paddingTop: '78px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <nav className="site-nav" id="site-nav">
         <Link to="/" className="nav-logo">
           <img src="/uploads/hackathon_logo2026.png" alt="KeanUHackThis logo" />
