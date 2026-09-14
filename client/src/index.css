@@ -4550,6 +4550,32 @@ input[type="checkbox"]:focus {
   .kean-clock-sponsors-inset {
     padding-inline: clamp(22px, 6vw, 48px);
   }
+
+  /* Mobile gets its own taller, tighter crop of keanClock.png: the
+     desktop rule sizes the backdrop to the image's own aspect ratio,
+     which on a narrow viewport is far shorter than Sponsors + Schedule's
+     stacked content — that mismatch was clipping the Schedule section
+     clean out of view (overflow:hidden on a box the content had already
+     overflowed). Here the wrapper instead gets a deliberate min-height,
+     tall enough to hold both sections plus room to breathe, and the
+     backdrop switches to background-size:cover anchored on the clock
+     tower so only the tower (not the full skyline) shows. */
+  .kean-clock-parallax {
+    aspect-ratio: auto;
+    min-height: clamp(680px, 118vw, 900px);
+  }
+
+  .kean-clock-parallax-bg {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    background-position: 100% 55%;
+    background-size: auto 145%;
+    mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
+  }
 }
 
 .home-page .headline {
@@ -4600,9 +4626,12 @@ input[type="checkbox"]:focus {
     top: auto;
     right: auto;
     width: min(100%, 760px);
-    height: auto;
-    min-height: clamp(430px, 52vh, 560px);
-    margin: 0;
+    /* Explicit (not auto) height: .sphere-gallery / .sphere-gallery-stage
+       below size themselves at height:100%, which resolves to 0 against
+       an auto-height ancestor — that collapse was hiding the gallery
+       entirely on mobile. A definite height here fixes the whole chain. */
+    height: clamp(430px, 52vh, 560px);
+    margin: 0 auto 16px;
     border-radius: 0;
   }
 
@@ -4610,8 +4639,22 @@ input[type="checkbox"]:focus {
     display: none;
   }
 
+  .about-gallery-panel .sphere-gallery-stage::before {
+    display: none;
+  }
+
+  /* No shrink-to-fit on mobile: the frame/track/stage above are already
+     forced to 100% of this panel, so the image fills it edge to edge
+     instead of floating inside it with empty space top and bottom. */
   .about-gallery-panel > div {
-    transform: scale(0.9);
+    transform: none;
+  }
+
+  /* Bottom veil reads as a dead/faded strip once the photo is this
+     close to the headline below it — drop it so the image stays
+     complete on mobile. */
+  .about-gallery-panel .sphere-gallery-frame > div {
+    display: none;
   }
 
   .about-bottom-row {
@@ -4821,12 +4864,8 @@ input[type="checkbox"]:focus {
 
   .about-gallery-panel {
     min-height: 330px;
-    margin-inline: -20px;
+    margin-inline: auto;
     border-radius: 0;
-  }
-
-  .about-gallery-panel > div {
-    transform: scale(0.62);
   }
 
   .about-register {
