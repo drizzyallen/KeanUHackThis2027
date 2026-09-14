@@ -563,7 +563,7 @@ export default function Home() {
                   <span>KeanUHackThis</span>
                   <strong>2027</strong>
                 </h1>
-                <div className="home-waitlist-fields" aria-label="Waitlist information">
+                <div id="home-waitlist" className="home-waitlist-fields" aria-label="Waitlist information">
                   <input type="text" name="waitlist-name" placeholder="Full name" autoComplete="name" />
                   <input type="email" name="waitlist-email" placeholder="Email address" autoComplete="email" />
                 </div>
@@ -650,9 +650,9 @@ export default function Home() {
               <span>To Attend</span>
             </div>
             <div className="about-register">
-              <Link to="/register" className="hero-btn hero-btn-primary">
-                Register now <span aria-hidden="true">&rarr;</span>
-              </Link>
+              <a href="#home-waitlist" className="hero-btn hero-btn-primary">
+                Waitlist now <span aria-hidden="true">&rarr;</span>
+              </a>
               <span>Kean University · Union, NJ</span>
             </div>
           </div>
@@ -709,45 +709,130 @@ export default function Home() {
           <div className="faq-list">
             <div className="faq-item glass-panel">
               <button className="faq-question" onClick={toggleFaq}>
-                Who can participate?
+                👩‍💻 Who can participate?
                 <span className="faq-icon">+</span>
               </button>
               <div className="faq-answer">
                 <div className="faq-answer-inner">
-                  Any currently enrolled undergraduate or graduate student aged 18+ can participate.
+                  Dream in AI is open to all undergraduate and graduate students (aged 18+), no matter your major or experience level.
+                  <br />
+                  <br />
+                  ✨ First-time hacker? You&rsquo;re welcome.
+                  <br />
+                  🚀 Experienced builder? We&rsquo;d love to have you.
+                  <br />
+                  If you&rsquo;re curious about tech, creativity, or AI: this event is for you 💫
                 </div>
               </div>
             </div>
             <div className="faq-item glass-panel">
               <button className="faq-question" onClick={toggleFaq}>
-                Do I need a team?
+                💸 How much does it cost?
                 <span className="faq-icon">+</span>
               </button>
               <div className="faq-answer">
                 <div className="faq-answer-inner">
-                  No. You can arrive solo and form a team during the event.
+                  COMPLETELY FREE. 🎉
+                  <br />
+                  No registration fees. No hidden costs. Just learning, creativity, and fun ✨
+                  <br />
+                  We ask all participants to act responsibly and respectfully so everyone has a great experience 💙
                 </div>
               </div>
             </div>
             <div className="faq-item glass-panel">
               <button className="faq-question" onClick={toggleFaq}>
-                How much does it cost?
+                👥 Do I need a team to register?
                 <span className="faq-icon">+</span>
               </button>
               <div className="faq-answer">
                 <div className="faq-answer-inner">
-                  It is free to attend, including food, workshops, and mentorship.
+                  Nope&mdash;you can register solo!
+                  <br />
+                  - 👤 Register individually
+                  <br />
+                  - 🤝 Don&rsquo;t have a team? We&rsquo;ll help match you after registration closes
+                  <br />
+                  - 🎤 Attending only workshops or networking? No team needed at all
+                  <br />
+                  If you have a team of 3 already, just share your members name when you register. All members of a team MUST complete registration.
                 </div>
               </div>
             </div>
             <div className="faq-item glass-panel">
               <button className="faq-question" onClick={toggleFaq}>
-                Where is it held?
+                🎒 What should I bring?
                 <span className="faq-icon">+</span>
               </button>
               <div className="faq-answer">
                 <div className="faq-answer-inner">
-                  The event is hosted at Kean University in Union, New Jersey.
+                  Required
+                  <br />
+                  - 💻 Laptop &amp; charger
+                  <br />
+                  - 🪪 Student ID
+                  <br />
+                  <br />
+                  Recommended (since it&rsquo;s a 24-hour event!)
+                  <br />
+                  - 🧥 Hoodie or blanket
+                  <br />
+                  - 🪥 Toiletries
+                  <br />
+                  - 💧 Water bottle
+                  <br />
+                  - 🔌 Phone charger
+                  <br />
+                  - 🛌 Sleeping bag/pillows
+                  <br />
+                  🧳 You&rsquo;re responsible for your belongings, but don&rsquo;t worry, we&rsquo;ll provide designated storage space during the event.
+                </div>
+              </div>
+            </div>
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                🍕 Will food be provided?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  Yes! 😋
+                  <br />
+                  We&rsquo;ll have meals and snacks available throughout the hackathon 🍽️
+                  <br />
+                  🥗 Have dietary restrictions? Be sure to let us know in the registration form before March 15, 2026, so we can accommodate you.
+                </div>
+              </div>
+            </div>
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                🌙 Do I have to stay overnight?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  Yes, if you&rsquo;re hacking. Students participating in the hackathon portion are expected to stay for the full overnight experience 🌌
+                </div>
+              </div>
+            </div>
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                🏆 Are there prizes?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  Yes &mdash; and they&rsquo;re exciting 👀✨
+                  <br />
+                  Prizes will be awarded for:
+                  <br />
+                  - 🥇 1st Place
+                  <br />
+                  - 🥈 2nd Place
+                  <br />
+                  - 🥉 3rd Place
+                  <br />
+                  🎁 Additional sponsor prizes may be announced&mdash;stay tuned!
                 </div>
               </div>
             </div>

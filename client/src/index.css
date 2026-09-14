@@ -4372,7 +4372,7 @@ input[type="checkbox"]:focus {
 }
 
 .about-metric span,
-.about-register span {
+.about-register > span {
   margin-top: 12px;
   color: rgba(224, 234, 255, 0.72);
   font-family: "JetBrains Mono", ui-monospace, monospace;
