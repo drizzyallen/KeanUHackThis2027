@@ -1507,6 +1507,43 @@ img {
   max-width: 72ch;
 }
 
+.organizer-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.organizer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 46px;
+  padding: 10px 12px 10px 14px;
+  border: 1px solid rgba(220, 235, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.2;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.organizer-link:hover,
+.organizer-link:focus-visible {
+  border-color: rgba(92, 141, 232, 0.55);
+  background: rgba(48, 96, 200, 0.16);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.linkedin-logo {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  fill: #7fb0ff;
+}
+
 .site-footer {
   background: #030812;
   border-top: 1px solid var(--border);
@@ -3769,6 +3806,10 @@ input[type="checkbox"]:focus {
   gap: 12px;
 }
 
+.home-waitlist-form {
+  display: contents;
+}
+
 .home-waitlist-fields::before,
 .home-waitlist-fields::after {
   content: "";
@@ -3855,6 +3896,42 @@ input[type="checkbox"]:focus {
 .hero-btn:active {
   transform: translate(3px, 4px) scale(0.99);
   box-shadow: 4px 5px 0 rgba(0, 74, 88, 0.72);
+}
+
+.hero-btn:disabled,
+.home-hero-actions .hero-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+  transform: none;
+}
+
+.home-waitlist-message {
+  width: min(100%, 360px);
+  margin-top: 12px;
+  color: #073247;
+  font-family: "Plus Jakarta Sans", "Baloo 2", "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.home-waitlist-message.error {
+  color: #9e2434;
+}
+
+.home-waitlist-message.success {
+  color: #073247;
+}
+
+.home-waitlist-reset {
+  margin-left: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .hero-btn:focus-visible,

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -9,6 +9,7 @@ import keanULogo from '../../uploads/KeanU.png';
 import mongoDbLogo from '../../uploads/MongoDB_ForestGreen.png';
 import tinComputerLogo from '../../uploads/TinComputer.png';
 import KeanClockParallax from '../components/KeanClockParallax';
+import { supabase } from '../supabase';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -35,6 +36,15 @@ const sponsorLogos = [
   { name: "Tin Computer", src: tinComputerLogo, glow: true },
 ];
 const sponsorLogoSlides = [...sponsorLogos, ...sponsorLogos, ...sponsorLogos, ...sponsorLogos];
+const organizers = [
+  { name: "Noah Mea", linkedIn: "https://www.linkedin.com/in/noah-mea/" },
+  { name: "Maryam Ahmed", linkedIn: "https://www.linkedin.com/in/maryam-ahmed-555813241/" },
+  { name: "AJ Bayate", linkedIn: "https://www.linkedin.com/in/abayate/" },
+  { name: "Allen Ramirez", linkedIn: "https://www.linkedin.com/in/allenram/" },
+  { name: "Laibah Khan", linkedIn: "https://www.linkedin.com/in/laibah-khan-a56725385/" },
+  { name: "Isagani Inofinada", linkedIn: "https://www.linkedin.com/in/isagani-inofinada-jr-58bb5a255/" },
+  { name: "Marvin Ayala", linkedIn: "https://www.linkedin.com/in/marvinayala/" },
+];
 
 const getDocumentTop = (element: HTMLElement) => {
   let top = 0;
@@ -65,6 +75,12 @@ export default function Home() {
   const [errorMsg, setErrorMsg] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [waitlistName, setWaitlistName] = useState('');
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistMessage, setWaitlistMessage] = useState('');
+  const [waitlistStatus, setWaitlistStatus] = useState<'success' | 'error' | ''>('');
+  const [waitlistLoading, setWaitlistLoading] = useState(false);
+  const [waitlistJoined, setWaitlistJoined] = useState(false);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -284,6 +300,16 @@ export default function Home() {
     }
   }, [loginMode, navigate]);
 
+  useEffect(() => {
+    if (localStorage.getItem("kuht_waitlist_joined") !== "1") return;
+
+    setWaitlistJoined(true);
+    setWaitlistName(localStorage.getItem("kuht_waitlist_name") || "");
+    setWaitlistEmail(localStorage.getItem("kuht_waitlist_email") || "");
+    setWaitlistMessage(localStorage.getItem("kuht_waitlist_message") || "");
+    setWaitlistStatus("success");
+  }, []);
+
   const closeHeroLogin = () => {
     setLoginMode(false);
     setErrorMsg('');
@@ -354,6 +380,63 @@ export default function Home() {
       setErrorMsg("Could not reach the server. Make sure the backend is running.");
       setLoading(false);
     }
+  };
+
+  const resetWaitlist = () => {
+    localStorage.removeItem("kuht_waitlist_joined");
+    localStorage.removeItem("kuht_waitlist_name");
+    localStorage.removeItem("kuht_waitlist_email");
+    localStorage.removeItem("kuht_waitlist_message");
+    setWaitlistJoined(false);
+    setWaitlistName('');
+    setWaitlistEmail('');
+    setWaitlistMessage('');
+    setWaitlistStatus('');
+  };
+
+  const handleWaitlistSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const nameTrim = waitlistName.trim();
+    const emailTrim = waitlistEmail.trim().toLowerCase();
+
+    setWaitlistMessage('');
+    setWaitlistStatus('');
+
+    if (!nameTrim || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim)) {
+      setWaitlistMessage("Please enter your full name and a valid email.");
+      setWaitlistStatus("error");
+      return;
+    }
+
+    setWaitlistLoading(true);
+
+    const { error } = await supabase
+      .from('coming_soon_signups')
+      .insert([{ full_name: nameTrim, email: emailTrim }]);
+
+    setWaitlistLoading(false);
+
+    if (error) {
+      setWaitlistMessage(
+        error.code === "23505"
+          ? "Your email is already on the waitlist!"
+          : "Something went wrong. Please try again."
+      );
+      setWaitlistStatus("error");
+      return;
+    }
+
+    const successMessage = `You are on the waitlist ${nameTrim}`;
+    localStorage.setItem("kuht_waitlist_joined", "1");
+    localStorage.setItem("kuht_waitlist_name", nameTrim);
+    localStorage.setItem("kuht_waitlist_email", emailTrim);
+    localStorage.setItem("kuht_waitlist_message", successMessage);
+    setWaitlistName(nameTrim);
+    setWaitlistEmail(emailTrim);
+    setWaitlistJoined(true);
+    setWaitlistMessage(successMessage);
+    setWaitlistStatus("success");
   };
 
   const toggleMenu = () => {
@@ -563,23 +646,57 @@ export default function Home() {
                   <span>KeanUHackThis</span>
                   <strong>2027</strong>
                 </h1>
-                <div id="home-waitlist" className="home-waitlist-fields" aria-label="Waitlist information">
-                  <input type="text" name="waitlist-name" placeholder="Full name" autoComplete="name" />
-                  <input type="email" name="waitlist-email" placeholder="Email address" autoComplete="email" />
-                </div>
-                <div className="home-hero-actions" aria-label="Primary actions">
-                  <Link to="/register" className="hero-btn hero-btn-primary">
-                    Join waitlist <span aria-hidden="true">&rarr;</span>
-                  </Link>
-                  <a
-                    href="https://keanuhackthis2027.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hero-btn hero-btn-secondary"
-                  >
-                    Sponsor us
-                  </a>
-                </div>
+                <form className="home-waitlist-form" onSubmit={handleWaitlistSubmit} noValidate>
+                  <div id="home-waitlist" className="home-waitlist-fields" aria-label="Waitlist information">
+                    <input
+                      type="text"
+                      name="waitlist-name"
+                      placeholder="Full name"
+                      autoComplete="name"
+                      value={waitlistName}
+                      onChange={(event) => {
+                        setWaitlistName(event.target.value);
+                        setWaitlistMessage('');
+                        setWaitlistStatus('');
+                      }}
+                    />
+                    <input
+                      type="email"
+                      name="waitlist-email"
+                      placeholder="Email address"
+                      autoComplete="email"
+                      value={waitlistEmail}
+                      onChange={(event) => {
+                        setWaitlistEmail(event.target.value);
+                        setWaitlistMessage('');
+                        setWaitlistStatus('');
+                      }}
+                    />
+                  </div>
+                  <div className="home-hero-actions" aria-label="Primary actions">
+                    <button type="submit" className="hero-btn hero-btn-primary" disabled={waitlistLoading || waitlistJoined}>
+                      {waitlistLoading ? "Joining..." : "Join waitlist"} <span aria-hidden="true">&rarr;</span>
+                    </button>
+                    <a
+                      href="https://keanuhackthis2027.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hero-btn hero-btn-secondary"
+                    >
+                      Sponsor us
+                    </a>
+                  </div>
+                  {waitlistMessage && (
+                    <div className={`home-waitlist-message ${waitlistStatus}`} role="status">
+                      <span>{waitlistMessage}</span>
+                      {waitlistJoined && (
+                        <button type="button" className="home-waitlist-reset" onClick={resetWaitlist}>
+                          Reset
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </form>
               </>
             )}
           </div>
@@ -707,6 +824,33 @@ export default function Home() {
         <section id="faq" className="section home-info-section faq-solid-bg">
           <h2 className="headline reveal">FAQs</h2>
           <div className="faq-list">
+            <div className="faq-item glass-panel">
+              <button className="faq-question" onClick={toggleFaq}>
+                Who are the Organizers?
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-answer">
+                <div className="faq-answer-inner">
+                  <div className="organizer-list">
+                    {organizers.map(organizer => (
+                      <a
+                        className="organizer-link"
+                        href={organizer.linkedIn}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={organizer.name}
+                        aria-label={`${organizer.name} on LinkedIn`}
+                      >
+                        <span>{organizer.name}</span>
+                        <svg className="linkedin-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                          <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.44-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.53V9H7.1v11.45ZM22.22 0H1.77C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z" />
+                        </svg>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="faq-item glass-panel">
               <button className="faq-question" onClick={toggleFaq}>
                 👩‍💻 Who can participate?
