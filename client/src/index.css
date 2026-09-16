@@ -48,6 +48,8 @@ html {
   background: #030712;
   scroll-behavior: smooth;
   scroll-padding-top: 86px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body {
@@ -59,6 +61,11 @@ body {
   overflow-x: hidden;
   overscroll-behavior-y: none;
   min-height: 100vh;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 a {
