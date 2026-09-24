@@ -860,7 +860,7 @@ export default function Home() {
               </button>
               <div className="faq-answer">
                 <div className="faq-answer-inner">
-                  Dream in AI is open to all undergraduate and graduate students (aged 18+), no matter your major or experience level.
+                  KeanUHackThis is open to all undergraduate and graduate students (aged 18+), no matter your major or experience level.
                   <br />
                   <br />
                   ✨ First-time hacker? You&rsquo;re welcome.
