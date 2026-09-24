@@ -8,6 +8,7 @@ import deptCsLogo from '../../uploads/KeanCSDep.png';
 import keanULogo from '../../uploads/KeanU.png';
 import mongoDbLogo from '../../uploads/MongoDB_ForestGreen.png';
 import tinComputerLogo from '../../uploads/TinComputer.png';
+import tryHackMeLogo from '../../uploads/tryhackme.png';
 import KeanClockParallax from '../components/KeanClockParallax';
 import { supabase } from '../supabase';
 
@@ -34,6 +35,7 @@ const marqueeItems = [...WALL_PHRASES, ...WALL_PHRASES];
 const sponsorLogos = [
   { name: "MongoDB", src: mongoDbLogo },
   { name: "Tin Computer", src: tinComputerLogo, glow: true },
+  { name: "TryHackMe", src: tryHackMeLogo },
 ];
 const sponsorLogoSlides = [...sponsorLogos, ...sponsorLogos, ...sponsorLogos, ...sponsorLogos];
 const organizers = [
