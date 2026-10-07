@@ -3780,16 +3780,16 @@ input[type="checkbox"]:focus {
 .hero-title span {
   color: #ffffff;
   text-shadow:
-    0 7px 0 rgba(5, 52, 72, 0.92),
-    0 14px 22px rgba(0, 47, 78, 0.26);
+    0 0.1em 0 rgba(5, 52, 72, 0.92),
+    0 0.2em 0.31em rgba(0, 47, 78, 0.26);
 }
 
 .hero-title strong {
   color: #0067c8;
   font: inherit;
   text-shadow:
-    0 7px 0 rgba(5, 52, 72, 0.92),
-    0 14px 22px rgba(0, 47, 78, 0.26);
+    0 0.1em 0 rgba(5, 52, 72, 0.92),
+    0 0.2em 0.31em rgba(0, 47, 78, 0.26);
 }
 
 .hero-date {
@@ -3810,16 +3810,16 @@ input[type="checkbox"]:focus {
 .hero-date span {
   color: #0067c8;
   text-shadow:
-    0 5px 0 rgba(5, 52, 72, 0.92),
-    0 11px 18px rgba(0, 47, 78, 0.24);
+    0 0.11em 0 rgba(5, 52, 72, 0.92),
+    0 0.25em 0.41em rgba(0, 47, 78, 0.24);
 }
 
 .hero-date strong {
   color: #ffffff;
   font: inherit;
   text-shadow:
-    0 5px 0 rgba(5, 52, 72, 0.92),
-    0 11px 18px rgba(0, 47, 78, 0.24);
+    0 0.11em 0 rgba(5, 52, 72, 0.92),
+    0 0.25em 0.41em rgba(0, 47, 78, 0.24);
 }
 
 .home-hero-actions {
@@ -4073,8 +4073,8 @@ input[type="checkbox"]:focus {
   text-transform: uppercase;
   color: #ffffff;
   text-shadow:
-    0 7px 0 rgba(5, 52, 72, 0.92),
-    0 14px 22px rgba(0, 47, 78, 0.26);
+    0 0.1em 0 rgba(5, 52, 72, 0.92),
+    0 0.2em 0.31em rgba(0, 47, 78, 0.26);
 }
 
 .hero-login-error {
@@ -4700,8 +4700,8 @@ input[type="checkbox"]:focus {
   text-transform: uppercase;
   color: #ffffff;
   text-shadow:
-    0 6px 0 rgba(5, 52, 72, 0.9),
-    0 14px 22px rgba(0, 47, 78, 0.24);
+    0 0.1em 0 rgba(5, 52, 72, 0.9),
+    0 0.23em 0.37em rgba(0, 47, 78, 0.24);
 }
 
 .home-page .headline span,
@@ -4709,8 +4709,8 @@ input[type="checkbox"]:focus {
   color: #2aa8ff;
   font-style: normal;
   text-shadow:
-    0 6px 0 rgba(5, 52, 72, 0.9),
-    0 14px 22px rgba(0, 47, 78, 0.24);
+    0 0.1em 0 rgba(5, 52, 72, 0.9),
+    0 0.23em 0.37em rgba(0, 47, 78, 0.24);
 }
 
 @media (max-width: 1100px) {
