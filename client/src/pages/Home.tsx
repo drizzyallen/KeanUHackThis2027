@@ -6,6 +6,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 import deptCsLogo from '../../uploads/KeanCSDep.png';
 import keanULogo from '../../uploads/KeanU.png';
+import comptiaLogo from '../../uploads/Comptia.webp';
 import mongoDbLogo from '../../uploads/MongoDB_ForestGreen.png';
 import tinComputerLogo from '../../uploads/TinComputer.png';
 import tryHackMeLogo from '../../uploads/tryhackme.png';
@@ -33,6 +34,7 @@ const WALL_PHRASES = [
 
 const marqueeItems = [...WALL_PHRASES, ...WALL_PHRASES];
 const sponsorLogos = [
+  { name: "CompTIA", src: comptiaLogo },
   { name: "MongoDB", src: mongoDbLogo },
   { name: "Tin Computer", src: tinComputerLogo, glow: true },
   { name: "TryHackMe", src: tryHackMeLogo },
