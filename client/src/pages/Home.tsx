@@ -650,6 +650,10 @@ export default function Home() {
                   <span>KeanUHackThis</span>
                   <strong>2027</strong>
                 </h1>
+                <div className="hero-date" aria-label="April 2, 2027">
+                  <span>April 2,</span>
+                  <strong>2027</strong>
+                </div>
                 <form className="home-waitlist-form" onSubmit={handleWaitlistSubmit} noValidate>
                   <div id="home-waitlist" className="home-waitlist-fields" aria-label="Waitlist information">
                     <input

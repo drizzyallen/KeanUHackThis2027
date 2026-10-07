@@ -3792,6 +3792,36 @@ input[type="checkbox"]:focus {
     0 14px 22px rgba(0, 47, 78, 0.26);
 }
 
+.hero-date {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.24em;
+  margin-top: clamp(2px, 0.8vh, 8px);
+  font-family: "Lilita One", "Baloo 2", "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(24px, 2.75vw, 44px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  transform: rotate(-1.2deg);
+  transform-origin: 0 50%;
+}
+
+.hero-date span {
+  color: #0067c8;
+  text-shadow:
+    0 5px 0 rgba(5, 52, 72, 0.92),
+    0 11px 18px rgba(0, 47, 78, 0.24);
+}
+
+.hero-date strong {
+  color: #ffffff;
+  font: inherit;
+  text-shadow:
+    0 5px 0 rgba(5, 52, 72, 0.92),
+    0 11px 18px rgba(0, 47, 78, 0.24);
+}
+
 .home-hero-actions {
   position: static;
   width: auto;
